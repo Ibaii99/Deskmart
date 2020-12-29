@@ -54,11 +54,6 @@ Grove = GroveTouchSensor
 
 
 def main():
-    import sys
-
-    if len(sys.argv) < 2:
-        print('Usage: {} pin'.format("touchexample.py"))
-        sys.exit(1)
 
     touch = GroveTouchSensor(18)
 
