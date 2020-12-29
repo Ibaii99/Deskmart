@@ -1,8 +1,8 @@
-from grove_lib.grove_flame_sensor import Grove_Flame_Sensor
-from grove_lib.grove_infrarred_sensor import Grove_Infrarred_Sensor
-from grove_lib.grove_rgb_lcd import Grove_Rgb_Lcd
-from grove_lib.grove_temphum_sensor import Grove_TempHum_sensor
-from grove_lib.grove_touch_sensor import Grove_Touch_Sensor
+from Deskmart_Backend_Logic.grove_lib.grove_flame_sensor import Grove_Flame_Sensor
+from Deskmart_Backend_Logic.grove_lib.grove_infrarred_sensor import Grove_Infrarred_Sensor
+from Deskmart_Backend_Logic.grove_lib.grove_rgb_lcd import Grove_Rgb_Lcd
+from Deskmart_Backend_Logic.grove_lib.grove_temphum_sensor import Grove_TempHum_sensor
+from Deskmart_Backend_Logic.grove_lib.grove_touch_sensor import Grove_Touch_Sensor
 
 import config
 
