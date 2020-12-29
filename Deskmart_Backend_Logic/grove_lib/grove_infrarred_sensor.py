@@ -10,10 +10,10 @@ class Grove_Infrarred_Sensor:
         grovepi.pinMode(self.infrarred_emitter,"OUTPUT")
     
     def read(self):
-        return self.grovepi.digitalRead(self.infrarred_receiver)
+        return grovepi.digitalRead(self.infrarred_receiver)
 
     def emit(self):
-        return self.grovepi.digitalWrite(self.infrarred_emitter, 1)
+        return grovepi.digitalWrite(self.infrarred_emitter, 1)
     
     def stop(self):
-        return self.grovepi.digitalWrite(self.infrarred_emitter, 0)
+        return grovepi.digitalWrite(self.infrarred_emitter, 0)

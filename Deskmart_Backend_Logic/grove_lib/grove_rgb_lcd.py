@@ -19,12 +19,12 @@ class Grove_Rgb_Lcd:
  
     # set backlight to (R,G,B) (values from 0..255 for each)
     def setRGB(self, r,g,b):
-        bus.write_byte_data(self.DISPLAY_RGB_ADDR,0,0)
-        bus.write_byte_data(self.DISPLAY_RGB_ADDR,1,0)
-        bus.write_byte_data(self.DISPLAY_RGB_ADDR,0x08,0xaa)
-        bus.write_byte_data(self.DISPLAY_RGB_ADDR,4,r)
-        bus.write_byte_data(self.DISPLAY_RGB_ADDR,3,g)
-        bus.write_byte_data(self.DISPLAY_RGB_ADDR,2,b)
+        self.bus.write_byte_data(self.DISPLAY_RGB_ADDR,0,0)
+        self.bus.write_byte_data(self.DISPLAY_RGB_ADDR,1,0)
+        self.bus.write_byte_data(self.DISPLAY_RGB_ADDR,0x08,0xaa)
+        self.bus.write_byte_data(self.DISPLAY_RGB_ADDR,4,r)
+        self.bus.write_byte_data(self.DISPLAY_RGB_ADDR,3,g)
+        self.bus.write_byte_data(self.DISPLAY_RGB_ADDR,2,b)
     
     # send command to display (no need for external use)
     def textCommand(self, cmd):

@@ -8,4 +8,4 @@ class Grove_Touch_Sensor:
         grovepi.pinMode(self.touch_sensor,"INPUT")
     
     def read(self):
-        return self.grovepi.digitalRead(self.touch_sensor)
+        return grovepi.digitalRead(self.touch_sensor)

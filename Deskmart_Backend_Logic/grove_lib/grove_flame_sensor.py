@@ -9,4 +9,4 @@ class Grove_Flame_Sensor:
         grovepi.pinMode(self.flame_sensor,"INPUT")
     
     def read(self):
-        return self.grovepi.digitalRead(self.flame_sensor)
+        return grovepi.digitalRead(self.flame_sensor)
