@@ -54,7 +54,8 @@ class GroveTouchSensor(GPIO):
     def read(self):
         try:
             time.sleep(.5)
-            return grovepi.digitalRead(self.touch_sensor)
+            touch = GroveTouchSensor("18")
+            return grovepi.digitalRead(touch)
         except IOError:
             print ("Error")
 
