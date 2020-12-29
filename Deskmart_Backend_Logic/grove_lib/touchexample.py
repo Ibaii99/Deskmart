@@ -1,8 +1,6 @@
-import grovepi
-
 import time
 from grove.gpio import GPIO
- 
+
 
 class GroveTouchSensor(GPIO):
     def __init__(self, pin):
@@ -51,47 +49,31 @@ class GroveTouchSensor(GPIO):
             if callable(self._on_release):
                 self._on_release(dt)
 
-    def read(self):
-        try:
-            time.sleep(.5)
-            touch_sensor = 18
-            grovepi.pinMode(touch_sensor, "INPUT")
-            return grovepi.digitalRead(touch_sensor)
-        except IOError:
-            print ("Error")
 
-# def main():
-#     import sys
-#
-#     if len(sys.argv) < 2:
-#         print('Usage: {} pin'.format(sys.argv[0]))
-#         sys.exit(1)
-#
-#     touch = GroveTouchSensor(int(sys.argv[1]))
-#
-#     def on_press(t):
-#         print('Pressed')
-#     def on_release(t):
-#         print("Released.")
-#
-#     touch.on_press = on_press
-#     touch.on_release = on_release
-#
-#     while True:
-#         time.sleep(1)
-#
-#
-#
-# class Grove_Touch_Sensor:
-#     def __init__(self, pin):
-#         # Connect the Grove Flame Sensor to digital port D2
-#         # SIG,NC,VCC,GND
-#         self.touch_sensor = pin
-#         grovepi.pinMode(self.touch_sensor,"INPUT")
-#
-#     def read(self):
-#         try:
-#             time.sleep(.5)
-#             return grovepi.digitalRead(self.touch_sensor)
-#         except IOError:
-#             print ("Error")
+Grove = GroveTouchSensor
+
+
+def main():
+    import sys
+
+    if len(sys.argv) < 2:
+        print('Usage: {} pin'.format(sys.argv[0]))
+        sys.exit(1)
+
+    touch = GroveTouchSensor(int(sys.argv[1]))
+
+    def on_press(t):
+        print('Pressed')
+
+    def on_release(t):
+        print("Released.")
+
+    touch.on_press = on_press
+    touch.on_release = on_release
+
+    while True:
+        time.sleep(1)
+
+
+if __name__ == '__main__':
+    main()
