@@ -1,0 +1,50 @@
+<div class="row">
+
+  <!-- Left space-->
+  <div class="card-body">
+    <div class="card card-user">
+    </div>
+  </div>
+
+
+  <div class="card-body">
+    <div class="card card-user">
+      <div class="card-header">
+        <h5 class="card-title">Log in</h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="formGroup" (ngSubmit)="onLogIn()">
+          <div class="row">
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-control" [formControl]="formGroup.controls.username" placeholder="Username" required>
+              </div>
+            </div>
+            <div class="col-md-6 pl-1">
+              <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" [formControl]="formGroup.controls.password" placeholder="Password" required>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="update ml-auto mr-auto">
+              <button type="submit" class="btn btn-primary btn-round" [disabled]="!formGroup.valid">Log in</button>
+              <button (click)="register()" class="btn btn-round">Register</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!--Right space-->
+  <div class="card-body">
+    <div class="card card-user">
+    </div>
+  </div>
+
+</div>
