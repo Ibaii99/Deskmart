@@ -10,7 +10,7 @@ import config
 def init():
     print("Initializing")
     flame = grove_flame_sensor.Grove_Flame_Sensor(config.FLAME_SENSOR)
-    touch = grove_touch_sensor.Grove_Touch_Sensor(config.TOUCH_SENSOR)
+    touch = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR)
     temp_hum = grove_temphum_sensor.Grove_TempHum_sensor(config.TEMP_HUM_SENSOR)
     print("Initializing finished")
 
