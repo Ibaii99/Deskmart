@@ -4,7 +4,7 @@ import time
 
 #from grove.gpio import GPIO
  
- """
+"""
 class GroveTouchSensor(GPIO):
     def __init__(self, pin):
         super(GroveTouchSensor, self).__init__(pin, GPIO.IN)
@@ -52,7 +52,7 @@ class GroveTouchSensor(GPIO):
             if callable(self._on_release):
                 self._on_release(dt)
  """
- 
+
 """
 def main():
     import sys
