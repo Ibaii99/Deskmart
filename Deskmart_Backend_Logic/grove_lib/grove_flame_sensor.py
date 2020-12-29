@@ -1,6 +1,7 @@
 import grovepi
 
 class Grove_Flame_Sensor:
+
     def __init__(self, pin):
         # Connect the Grove Flame Sensor to digital port D2
         # SIG,NC,VCC,GND
