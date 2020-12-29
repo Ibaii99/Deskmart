@@ -60,6 +60,10 @@ def main():
         print('Usage: {} pin'.format(sys.argv[0]))
         sys.exit(1)
 
+    print("ARG0")
+    print(sys.argv[0])
+    print("ARG1")
+    print(sys.argv[1])
     touch = GroveTouchSensor(18)
 
     def on_press(t):
