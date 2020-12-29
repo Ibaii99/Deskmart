@@ -60,7 +60,7 @@ def main():
         print('Usage: {} pin'.format(sys.argv[0]))
         sys.exit(1)
 
-    touch = GroveTouchSensor(int(sys.argv[1]))
+    touch = GroveTouchSensor(18)
 
     def on_press(t):
         print('Pressed')
@@ -73,7 +73,6 @@ def main():
 
     while True:
         time.sleep(1)
-
 
 if __name__ == '__main__':
     main()
