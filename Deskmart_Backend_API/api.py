@@ -1,11 +1,12 @@
 from flask import Flask, Blueprint, abort, request, Response, jsonify
 from flask_cors import CORS, cross_origin
-
+from datetime import datetime
+from influxdb_client import InfluxDBClient, Point, WritePrecision
+from influxdb_client.client.write_api import SYNCHRONOUS
 import json
 from routing import api_users
 import config
 import logging
-
 from logic.authorization import Authorization
 
 app = Flask(__name__)
@@ -16,6 +17,13 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 app.config['CORS_HEADERS'] = ['Content-Type', 'Authorization']
 
+org = "jorge.elbusto@opendeusto.es"
+bucket = "jorge.elbusto's Bucket"
+
+client = InfluxDBClient(url="https://eu-central-1-1.aws.cloud2.influxdata.com", token=app.config['TOKEN'])
+def writeOnInflux(data):
+    write_api = client.write_api(write_options=SYNCHRONOUS)
+    write_api.write(bucket, org, data)
 
 @app.route('/', methods=["GET"])
 @cross_origin()
@@ -89,7 +97,7 @@ def is_get_token_route(route):
 
 @app.errorhandler(403)
 def page_not_found(e):
-    return jsonify(json.dumps("Forbbiden acces, invalid api-key")), 403
+    return jsonify(json.dumps("Forbbiden access, invalid api-key")), 403
 
 @app.errorhandler(401)
 def page_not_found(e):
