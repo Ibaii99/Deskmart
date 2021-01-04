@@ -17,7 +17,6 @@ def init():
     print("Going to read")
     print("Touch sensor {}".format(touch.read()))
     print("Temp_Hum sensor {}".format(temp_hum.read()))
-    
     print("Flame sensor {}".format(flame.read()))
 
 if __name__ == '__main__':
