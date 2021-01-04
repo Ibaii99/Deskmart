@@ -15,8 +15,7 @@ def init():
     print("Initializing finished")
 
     print("Going to read")
-    while True:
-        print("Touch sensor {}".format(touch.read()))
+    print("Touch sensor {}".format(touch.read()))
     print("Temp_Hum sensor {}".format(temp_hum.read()))
     
     print("Flame sensor {}".format(flame.read()))

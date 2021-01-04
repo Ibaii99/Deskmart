@@ -64,5 +64,5 @@ class Grove_Touch_Sensor():
         self.touch.on_release = on_release
         if self.touch.on_press:
             return 1
-        else:
+        elif self.touch.on_release:
             return 0
