@@ -11,7 +11,7 @@ class Grove_Flame_Sensor:
         # SIG,NC,VCC,GND
         # self.flame_sensor = pin
         # grovepi.pinMode(self.flame_sensor,"INPUT")
-        GPIO.setmode(GPIO.BCM)
+        GPIO.setmode(GPIO.BOARD)
         self.INPUT_PIN = 22
         GPIO.setup(self.INPUT_PIN, GPIO.IN)
         input = GPIO.input(0)
