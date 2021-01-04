@@ -62,6 +62,6 @@ class Grove_Touch_Sensor():
     touch.on_release = on_release
 
     def read(self):
-        touch.on_press = on_press
-        touch.on_release = on_release
+        self.touch.on_press = on_press
+        self.touch.on_release = on_release
  
