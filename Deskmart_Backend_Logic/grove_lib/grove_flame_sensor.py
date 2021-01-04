@@ -18,7 +18,7 @@ class Grove_Flame_Sensor:
     
     def read(self):
         if (GPIO.input(self.INPUT_PIN) == True): # Physically read the pin now
-            print('3.3')
+            return 1
         else:
-            print('0')
+            return 0
         #return grovepi.digitalRead(self.flame_sensor)
