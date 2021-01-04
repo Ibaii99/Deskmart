@@ -48,30 +48,20 @@ class GroveTouchSensor(GPIO):
         else:
             if callable(self._on_release):
                 self._on_release(dt)
+
+class Grove_Touch_Sensor():
+    def __init__ (self, pin):
+        self.touch = GroveTouchSensor(int(pin))
  
-Grove = GroveTouchSensor
- 
- 
-def main():
-    import sys
- 
-    if len(sys.argv) < 2:
-        print('Usage: {} pin'.format(sys.argv[0]))
-        sys.exit(1)
- 
-    touch = GroveTouchSensor(int(sys.argv[1]))
- 
-    def on_press(t):
+    def on_press(self, t):
         print('Pressed')
-    def on_release(t):
+    def on_release(self, t):
         print("Released.")
  
     touch.on_press = on_press
     touch.on_release = on_release
+
+    def read(self):
+        touch.on_press = on_press
+        touch.on_release = on_release
  
-    while True:
-        time.sleep(1)
- 
- 
-if __name__ == '__main__':
-    main()
