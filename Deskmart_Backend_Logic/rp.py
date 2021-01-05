@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from grove_lib import grove_flame_sensor
 from grove_lib import grove_infrarred_sensor #.Grove_Infrarred_Sensor
 from grove_lib import grove_rgb_lcd #.Grove_Rgb_Lcd
