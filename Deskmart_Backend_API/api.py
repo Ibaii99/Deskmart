@@ -20,10 +20,25 @@ app.config['CORS_HEADERS'] = ['Content-Type', 'Authorization']
 org = "jorge.elbusto@opendeusto.es"
 bucket = "jorge.elbusto's Bucket"
 
-client = InfluxDBClient(url="https://eu-central-1-1.aws.cloud2.influxdata.com", token=app.config['TOKEN'])
-def writeOnInflux(data):
+client = InfluxDBClient(url="https://eu-central-1-1.aws.cloud2.influxdata.com", token=config.INFLUXDB_TOKEN)
+
+def sequencify(username, hum, temp, hayLlama, cap11, cap12, cap21, cap22):
+    sequence = ["humTemp,usuario=" + username + " humedad=" + hum,
+                "humTemp,usuario=" + username + " temperatura=" + temp,
+                "llama,usuario=" + username + " hayLlama=" + hayLlama,
+                "Capacitors,usuario=" + username + " cap11=" + cap11,
+                "Capacitors,usuario=" + username + " cap12=" + cap12,
+                "Capacitors,usuario=" + username + " cap21=" + cap21,
+                "Capacitors,usuario=" + username + " cap22=" + cap22]
+    return sequence
+
+'''
+a este metodo se le pasa el resultado del sequencify, podriamos combinarlo en uno que pase
+las variables y escriba en la api directamente
+'''
+def writeOnInflux(sequence):
     write_api = client.write_api(write_options=SYNCHRONOUS)
-    write_api.write(bucket, org, data)
+    write_api.write(bucket, org, sequence)
 
 @app.route('/', methods=["GET"])
 @cross_origin()
@@ -104,5 +119,10 @@ def page_not_found(e):
     return jsonify(json.dumps("Incorrect username or password")), 401
 
 if __name__ == '__main__':
-    app.run(debug=True, host=config.HOST, port=config.PORT)
+
+    sequence = sequencify("manolo","2","23","1","1","1","1","1") #SOLO SE PUEDEN PASAR STRINGS, IMPORTANTE
+    print(sequence)
+    writeOnInflux(sequence)
+    #app.run(debug=True, host=config.HOST, port=config.PORT)
+
 
