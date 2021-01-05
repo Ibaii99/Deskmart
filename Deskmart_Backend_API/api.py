@@ -48,9 +48,12 @@ def writeOnInflux(sequence):
 
 def getInfluxData():
     query = 'from(bucket: "DeskMart") |> range(start: -12h, stop: now()) |> filter(fn: (r) => r["_measurement"] == "Capacitors" or r["_measurement"] == "humTemp" or r["_measurement"] == "llama")' #FALLA LA QUERY
+
+
     result = client.query_api().query(query, org=org)
-    print(result)
-    return result
+    resultsJson = json.dumps(result)
+    print(resultsJson)
+    return resultsJson
 
 @app.route('/', methods=["GET"])
 @cross_origin()
