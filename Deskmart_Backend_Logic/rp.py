@@ -9,29 +9,40 @@ import database_manager
 
 def init():
     print("Initializing")
-    flame = grove_flame_sensor.Grove_Flame_Sensor(config.FLAME_SENSOR)
-    touch = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR)
     temp_hum = grove_temphum_sensor.Grove_TempHum_sensor(config.TEMP_HUM_SENSOR)
+
+    flame = grove_flame_sensor.Grove_Flame_Sensor(config.FLAME_SENSOR)
+
+    touch11 = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR_1x1)
+    touch12 = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR_1x2)
+    touch21 = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR_2x1)
+    touch22 = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR_2x2)
     print("Initializing finished")
 
-    print("Going to read")
     '''
+    print("Going to read")
+    
     print("Touch sensor {}".format(touch.read()))
     print("Temp_Hum sensor {}".format(temp_hum.read()))
     print("Flame sensor {}".format(flame.read()))
     '''
 
-    return flame, touch, temp_hum
+    return temp_hum, flame, touch11, touch12, touch21, touch22 
 
 def record():
-    flame, touch, temp_hum = init()
+    temp_hum, flame, touch11, touch12, touch21, touch22 = init()
 
-    flameValue = flame.read()
-    touchValue = touch.read()
-    humValue = temp_hum.read()[0]
-    tempValue = temp_hum.read()[1]
+    hum_value = temp_hum.read()[0]
+    temp_value = temp_hum.read()[1]
+    
+    flame_value = flame.read()
+    
+    touch11_value = touch11.read()
+    touch12_value = touch12.read()
+    touch21_value = touch21.read()
+    touch22_value = touch22.read()
 
-    values = [flameValue, touchValue, humValue, tempValue]
+    values = [hum_value, temp_value, flame_value, touch11_value, touch12_value, touch21_value, touch22_value]
 
     db = database_manager.InfluxController()
     db.save("ibai", values)
