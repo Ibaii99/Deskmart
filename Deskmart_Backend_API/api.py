@@ -75,6 +75,11 @@ def writeSensors():
     print(sequence)
     writeOnInflux(sequence)
 
+def getLastTimestamp():
+    results = getInfluxData()
+    lastSensors = results.slice(Math.max(arr.length - 7, 1))
+    return lastSensors
+
 @app.route('/', methods=["GET"])
 @cross_origin()
 def hello():
