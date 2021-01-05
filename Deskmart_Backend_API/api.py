@@ -51,7 +51,7 @@ def getInfluxData():
 
 
     result = client.query_api().query(query, org=org)
-    resultsJson = json.dumps(result)
+    resultsJson = json.dumps(result.to_dict())
     print(resultsJson)
     return resultsJson
 
