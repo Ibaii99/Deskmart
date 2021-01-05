@@ -64,6 +64,17 @@ def getInfluxData():
 
     return results_ordenados
 
+def writeSensors():
+    valSensores = rp.getSensors()  # [flameValue, touchValue, humValue, tempValue]
+    flame = str(valSensores[0])  # casteamos sensores a string
+    touch = str(valSensores[1])
+    hum = str(valSensores[2])
+    temp = str(valSensores[3])
+    sequence = sequencify("current_user", hum, temp, flame, touch, touch, touch,
+                          touch)  # aquí habría que poner los capacitores
+    print(sequence)
+    writeOnInflux(sequence)
+
 @app.route('/', methods=["GET"])
 @cross_origin()
 def hello():
@@ -144,14 +155,7 @@ def page_not_found(e):
 
 if __name__ == '__main__':
     getInfluxData()
-    '''valSensores = rp.getSensors() #[flameValue, touchValue, humValue, tempValue]
-    flame = str(valSensores[0]) #casteamos sensores a string
-    touch = str(valSensores[1])
-    hum = str(valSensores[2])
-    temp = str(valSensores[3])
-    sequence = sequencify("current_user",hum,temp,flame,touch,touch,touch,touch) #aquí habría que poner los capacitores
-    print(sequence)
-    writeOnInflux(sequence)'''
+    writeSensors()
 
 
     #app.run(debug=True, host=config.HOST, port=config.PORT)
