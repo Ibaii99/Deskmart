@@ -7,9 +7,9 @@ import json
 from routing import api_users
 import config
 import logging
-import sys, os
+import sys
+sys.path.append('../')
 from logic.authorization import Authorization
-sys.path.append(os.path.abspath(os.path.join('..', 'Deskmart_Backend_Logic')))
 from Deskmart_Backend_Logic import rp
 
 
