@@ -7,6 +7,9 @@ from grove_lib import grove_touch_sensor
 import config
 import database_manager
 
+import time
+
+
 def init():
     print("Initializing")
     temp_hum = grove_temphum_sensor.Grove_TempHum_sensor(config.TEMP_HUM_SENSOR)
@@ -45,7 +48,9 @@ def record():
     values = [hum_value, temp_value, flame_value, touch11_value, touch12_value, touch21_value, touch22_value]
 
     db = database_manager.InfluxController()
-    db.save("ibai", values)
+    db.save(config.USERNAME, values)
     
 if __name__ == '__main__':
-    record()
+    while True:
+        record()
+        time.sleep(1)

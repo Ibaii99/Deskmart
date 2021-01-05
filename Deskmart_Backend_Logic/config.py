@@ -11,3 +11,6 @@ TOUCH_SENSOR_2x2=26
 
 #Influx
 INFLUXDB_TOKEN = "6QCOt656axj-tWsEeTmZZ_URFB0ASrib1NZ0uGpqjuw-1ygd4xUeZzHhYHEkvt6y-wuERAY9ZYHFBsLCVHyw3Q=="
+
+#User
+USERNAME= "jorge-ibai"
