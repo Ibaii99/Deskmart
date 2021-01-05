@@ -55,7 +55,7 @@ def getInfluxData():
     results = []
     for table in result:
         for record in table.records:
-            results.append((record.get_time(), record.get_field(), record.get_value()))
+            results.append((record.get_time().strftime("%m/%d/%Y, %H:%M:%S"), record.get_field(), record.get_value()))
 
     print(results)
     return results
