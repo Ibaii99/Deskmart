@@ -127,10 +127,10 @@ def page_not_found(e):
 if __name__ == '__main__':
     print(sys.path)
     valSensores = rp.getSensors() #[flameValue, touchValue, humValue, tempValue]
-    flame = "" + valSensores[0] #casteamos sensores a string
-    touch = "" + valSensores[1]
-    hum = "" + valSensores[2]
-    temp = "" + valSensores[3]
+    flame = str(valSensores[0]) #casteamos sensores a string
+    touch = str(valSensores[1])
+    hum = str(valSensores[2])
+    temp = str(valSensores[3])
     sequence = sequencify("current_user",hum,temp,flame,touch,touch,touch,touch) #aquí habría que poner los capacitores
     print(sequence)
     writeOnInflux(sequence)
