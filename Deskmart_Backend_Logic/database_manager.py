@@ -30,10 +30,10 @@ class InfluxController:
         
         flame = str(val_sensores[2])  # casteamos sensores a string
         
-        touch11 = str(val_sensores[1])
-        touch12 = str(val_sensores[1])
-        touch21 = str(val_sensores[1])
-        touch22 = str(val_sensores[1])
+        touch11 = str(val_sensores[3])
+        touch12 = str(val_sensores[4])
+        touch21 = str(val_sensores[5])
+        touch22 = str(val_sensores[6])
 
         
         sequence = self.sequencify(user, hum, temp, flame, touch11, touch12, touch21, touch22)  # aquí habría que poner los capacitores
