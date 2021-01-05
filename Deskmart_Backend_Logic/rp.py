@@ -1,5 +1,3 @@
-import sys, os
-sys.path.append('../')
 from grove_lib import grove_flame_sensor
 from grove_lib import grove_infrarred_sensor #.Grove_Infrarred_Sensor
 from grove_lib import grove_rgb_lcd #.Grove_Rgb_Lcd
@@ -7,7 +5,7 @@ from grove_lib import grove_temphum_sensor
 from grove_lib import grove_touch_sensor
 
 from Deskmart_Backend_Logic import config
-
+from Deskmart_Backend_Logic import database_manager
 
 def init():
     print("Initializing")
@@ -25,7 +23,7 @@ def init():
 
     return flame, touch, temp_hum
 
-def getSensors():
+def record():
     flame, touch, temp_hum = init()
 
     flameValue = flame.read()
@@ -35,6 +33,8 @@ def getSensors():
 
     values = [flameValue, touchValue, humValue, tempValue]
 
-    return values
-
+    db = database_manager.InfluxController()
+    db.save("ibai", values)
     
+if __name__ == '__main__':
+    record()
