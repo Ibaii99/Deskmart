@@ -4,8 +4,8 @@ from grove_lib import grove_rgb_lcd #.Grove_Rgb_Lcd
 from grove_lib import grove_temphum_sensor
 from grove_lib import grove_touch_sensor
 
-from Deskmart_Backend_Logic import config
-from Deskmart_Backend_Logic import database_manager
+import config
+import database_manager
 
 def init():
     print("Initializing")
