@@ -51,7 +51,16 @@ def getInfluxData():
 
 
     result = client.query_api().query(query, org=org)
-    resultsJson = json.dumps(result.to_dict())
+    cont = 0
+    arrayOfDicts = []
+    for i in result:
+        dictResult = dict(i)
+        jsonResult = json.dumps(dictResult)
+        arrayOfDicts.append(jsonResult)
+        cont += 1
+
+
+    resultsJson = json.dumps(dictResult)
     print(resultsJson)
     return resultsJson
 
