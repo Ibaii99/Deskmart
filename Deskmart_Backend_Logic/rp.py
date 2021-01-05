@@ -26,11 +26,8 @@ def init():
 def getSensors():
     flame, touch, temp_hum = init()
     print(touch.read())
-    print(temp_hum.read())
+    print(temp_hum.read()[0])
     print(flame.read())
-    print("Touch sensor {}".format(touch.read()))
-    print("Temp_Hum sensor {}".format(temp_hum.read()))
-    print("Flame sensor {}".format(flame.read()))
 
 
 if __name__ == '__main__':
