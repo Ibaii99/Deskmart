@@ -9,6 +9,16 @@ class InfluxController:
         self.bucket = "DeskMart"
         self.client = InfluxDBClient(url="https://eu-central-1-1.aws.cloud2.influxdata.com", token=config.INFLUXDB_TOKEN)
         
+    def sequencify(self, username, hum, temp, hayLlama, cap11, cap12, cap21, cap22):
+        sequence = ["humTemp,usuario=" + username + " humedad=" + hum,
+                    "humTemp,usuario=" + username + " temperatura=" + temp,
+                    "llama,usuario=" + username + " hayLlama=" + hayLlama,
+                    "Capacitors,usuario=" + username + " cap11=" + cap11,
+                    "Capacitors,usuario=" + username + " cap12=" + cap12,
+                    "Capacitors,usuario=" + username + " cap21=" + cap21,
+                    "Capacitors,usuario=" + username + " cap22=" + cap22]
+        return sequence
+
     def write_on_influx(self, sequence):
         write_api = self.client.write_api(write_options=SYNCHRONOUS)
         write_api.write(self.bucket, self.org, sequence)
@@ -26,18 +36,8 @@ class InfluxController:
         touch22 = str(val_sensores[1])
 
         
-        sequence = sequencify(user, hum, temp, flame, touch11, touch12, touch21, touch22)  # aquí habría que poner los capacitores
+        sequence = self.sequencify(user, hum, temp, flame, touch11, touch12, touch21, touch22)  # aquí habría que poner los capacitores
         
         print("Sequence: {}".format(sequence))
         
         write_on_influx(sequence)
-
-    def sequencify(self, username, hum, temp, hayLlama, cap11, cap12, cap21, cap22):
-        sequence = ["humTemp,usuario=" + username + " humedad=" + hum,
-                    "humTemp,usuario=" + username + " temperatura=" + temp,
-                    "llama,usuario=" + username + " hayLlama=" + hayLlama,
-                    "Capacitors,usuario=" + username + " cap11=" + cap11,
-                    "Capacitors,usuario=" + username + " cap12=" + cap12,
-                    "Capacitors,usuario=" + username + " cap21=" + cap21,
-                    "Capacitors,usuario=" + username + " cap22=" + cap22]
-        return sequence
