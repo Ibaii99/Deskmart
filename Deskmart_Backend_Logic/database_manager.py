@@ -40,4 +40,4 @@ class InfluxController:
         
         print("Sequence: {}".format(sequence))
         
-        write_on_influx(sequence)
+        self.write_on_influx(sequence)
