@@ -36,7 +36,7 @@ class InfluxController:
         touch22 = str(val_sensores[1])
 
         
-        sequence = sequencify(user, hum, temp, flame, touch11, touch12, touch21, touch22)  # aquí habría que poner los capacitores
+        sequence = sequencify(self, user, hum, temp, flame, touch11, touch12, touch21, touch22)  # aquí habría que poner los capacitores
         
         print("Sequence: {}".format(sequence))
         
