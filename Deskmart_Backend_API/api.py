@@ -47,7 +47,7 @@ def writeOnInflux(sequence):
     write_api.write(bucket, org, sequence)
 
 def getInfluxData():
-    query = f'from(bucket: \\"{bucket}\\")' #FALLA LA QUERY
+    query = 'from(bucket: "DeskMart") |> range(start: -12h, stop: now()) |> filter(fn: (r) => r["_measurement"] == "Capacitors" or r["_measurement"] == "humTemp" or r["_measurement"] == "llama")' #FALLA LA QUERY
     result = client.query_api().query(query, org=org)
     print(result)
     return result
@@ -131,15 +131,15 @@ def page_not_found(e):
     return jsonify(json.dumps("Incorrect username or password")), 401
 
 if __name__ == '__main__':
-    #getInfluxData()
-    valSensores = rp.getSensors() #[flameValue, touchValue, humValue, tempValue]
+    getInfluxData()
+    '''valSensores = rp.getSensors() #[flameValue, touchValue, humValue, tempValue]
     flame = str(valSensores[0]) #casteamos sensores a string
     touch = str(valSensores[1])
     hum = str(valSensores[2])
     temp = str(valSensores[3])
     sequence = sequencify("current_user",hum,temp,flame,touch,touch,touch,touch) #aquí habría que poner los capacitores
     print(sequence)
-    writeOnInflux(sequence)
+    writeOnInflux(sequence)'''
 
 
     #app.run(debug=True, host=config.HOST, port=config.PORT)
