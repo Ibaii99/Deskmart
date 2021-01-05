@@ -51,18 +51,13 @@ def getInfluxData():
 
 
     result = client.query_api().query(query, org=org)
-    cont = 0
-    arrayOfDicts = []
-    for i in result:
-        dictResult = dict(i)
-        jsonResult = json.dumps(dictResult)
-        arrayOfDicts.append(jsonResult)
-        cont += 1
 
+    results = []
+    for table in result:
+        for record in table.records:
+            results.append((record.get_value(), record.get_field()))
 
-    resultsJson = json.dumps(dictResult)
-    print(resultsJson)
-    return resultsJson
+    return results
 
 @app.route('/', methods=["GET"])
 @cross_origin()
