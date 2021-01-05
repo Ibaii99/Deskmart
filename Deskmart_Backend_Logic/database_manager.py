@@ -22,7 +22,7 @@ class InfluxController:
     def write_on_influx(self, sequence):
         write_api = self.client.write_api(write_options=SYNCHRONOUS)
         write_api.write(self.bucket, self.org, sequence)
-        print("Write finished")
+        #print("Write finished")
 
     def save(self, user, val_sensores):
         hum = str(val_sensores[0])
@@ -38,6 +38,6 @@ class InfluxController:
         
         sequence = self.sequencify(user, hum, temp, flame, touch11, touch12, touch21, touch22)  # aquí habría que poner los capacitores
         
-        print("Sequence: {}".format(sequence))
+        #print("Sequence: {}".format(sequence))
         
         self.write_on_influx(sequence)

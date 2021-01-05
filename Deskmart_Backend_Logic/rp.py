@@ -11,7 +11,7 @@ import time
 
 
 def init():
-    print("Initializing")
+    #print("Initializing")
     temp_hum = grove_temphum_sensor.Grove_TempHum_sensor(config.TEMP_HUM_SENSOR)
 
     flame = grove_flame_sensor.Grove_Flame_Sensor(config.FLAME_SENSOR)
@@ -20,7 +20,7 @@ def init():
     touch12 = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR_1x2)
     touch21 = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR_2x1)
     touch22 = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR_2x2)
-    print("Initializing finished")
+    #print("Initializing finished")
 
     '''
     print("Going to read")
