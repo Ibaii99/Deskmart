@@ -9,6 +9,8 @@ import config
 import logging
 import sys
 sys.path.append('../')
+sys.path.append('../Deskmart_Backend_Logic')
+sys.path.append('../Deskmart_Frontend')
 from logic.authorization import Authorization
 from Deskmart_Backend_Logic import rp
 
@@ -123,8 +125,9 @@ def page_not_found(e):
     return jsonify(json.dumps("Incorrect username or password")), 401
 
 if __name__ == '__main__':
-
+    print(sys.path)
     valSensores = rp.getSensors() #[flameValue, touchValue, humValue, tempValue]
+    #valSensores = ["a","b","c","d"]
     flame = valSensores[0]
     touch = valSensores[1]
     hum = valSensores[2]
