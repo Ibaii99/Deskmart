@@ -24,7 +24,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = ['Content-Type', 'Authorization']
 
 org = "jorge.elbusto@opendeusto.es"
-bucket = "jorge.elbusto's Bucket"
+bucket = "DeskMart"
 
 client = InfluxDBClient(url="https://eu-central-1-1.aws.cloud2.influxdata.com", token=config.INFLUXDB_TOKEN)
 
@@ -47,10 +47,10 @@ def writeOnInflux(sequence):
     write_api.write(bucket, org, sequence)
 
 def getInfluxData():
-    query = f'from(bucket: \\"{bucket}\\") |> range(start: -1h)'
-    tables = client.query_api().query(query, org=org)
-    print(tables)
-    return tables
+    query = f'from(bucket: \\"{bucket}\\")' #FALLA LA QUERY
+    result = client.query_api().query(query, org=org)
+    print(result)
+    return result
 
 @app.route('/', methods=["GET"])
 @cross_origin()
@@ -131,21 +131,16 @@ def page_not_found(e):
     return jsonify(json.dumps("Incorrect username or password")), 401
 
 if __name__ == '__main__':
-    getInfluxData()
-    '''valSensores = rp.getSensors() #[flameValue, touchValue, humValue, tempValue]
+    #getInfluxData()
+    valSensores = rp.getSensors() #[flameValue, touchValue, humValue, tempValue]
     flame = str(valSensores[0]) #casteamos sensores a string
     touch = str(valSensores[1])
     hum = str(valSensores[2])
     temp = str(valSensores[3])
     sequence = sequencify("current_user",hum,temp,flame,touch,touch,touch,touch) #aquí habría que poner los capacitores
     print(sequence)
-    writeOnInflux(sequence)'''
+    writeOnInflux(sequence)
 
-    '''
-    UNA VEZ TENGAMOS PULIDO AL 100% LA ESTRUCTURA DE DATOS A UTILIZAR (creo que así es la correcta,
-    te dejo el print para que veas cómo está organizado, no hace falta timestamp) AVÍSAME PARA RENOMBRAR
-    EL BUCKET
-    '''
 
     #app.run(debug=True, host=config.HOST, port=config.PORT)
 
