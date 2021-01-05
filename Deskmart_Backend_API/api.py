@@ -57,8 +57,9 @@ def getInfluxData():
         for record in table.records:
             results.append((record.get_time().strftime("%m/%d/%Y, %H:%M:%S"), record.get_field(), record.get_value()))
 
-    print(results)
-    return results
+    results_ordenados = sorted(results, key=lambda tup: tup[1])
+    print(results_ordenados)
+    return results_ordenados
 
 @app.route('/', methods=["GET"])
 @cross_origin()
