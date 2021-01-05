@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint, abort, request, Response, jsonify
 from flask_cors import CORS, cross_origin
+from Deskmart_Backend_Logic import rp
 from datetime import datetime
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
@@ -120,9 +121,21 @@ def page_not_found(e):
 
 if __name__ == '__main__':
 
-    sequence = sequencify("manolo","2","23","1","1","1","1","1") #SOLO SE PUEDEN PASAR STRINGS, IMPORTANTE
+    valSensores = rp.getSensors() #[flameValue, touchValue, humValue, tempValue]
+    flame = valSensores[0]
+    touch = valSensores[1]
+    hum = valSensores[2]
+    temp = valSensores[3]
+    sequence = sequencify("current_user",hum,temp,flame,touch,touch,touch,touch) #aquí habría que poner los capacitores
     print(sequence)
     writeOnInflux(sequence)
+
+    '''
+    UNA VEZ TENGAMOS PULIDO AL 100% LA ESTRUCTURA DE DATOS A UTILIZAR (creo que así es la correcta,
+    te dejo el print para que veas cómo está organizado, no hace falta timestamp) AVÍSAME PARA RENOMBRAR
+    EL BUCKET
+    '''
+
     #app.run(debug=True, host=config.HOST, port=config.PORT)
 
 
