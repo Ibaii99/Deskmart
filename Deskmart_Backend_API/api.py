@@ -46,6 +46,12 @@ def writeOnInflux(sequence):
     write_api = client.write_api(write_options=SYNCHRONOUS)
     write_api.write(bucket, org, sequence)
 
+def getInfluxData():
+    query = f'from(bucket: \\"{bucket}\\") |> range(start: -1h)'
+    tables = client.query_api().query(query, org=org)
+    print(tables)
+    return tables
+
 @app.route('/', methods=["GET"])
 @cross_origin()
 def hello():
@@ -125,15 +131,15 @@ def page_not_found(e):
     return jsonify(json.dumps("Incorrect username or password")), 401
 
 if __name__ == '__main__':
-    print(sys.path)
-    valSensores = rp.getSensors() #[flameValue, touchValue, humValue, tempValue]
+    getInfluxData()
+    '''valSensores = rp.getSensors() #[flameValue, touchValue, humValue, tempValue]
     flame = str(valSensores[0]) #casteamos sensores a string
     touch = str(valSensores[1])
     hum = str(valSensores[2])
     temp = str(valSensores[3])
     sequence = sequencify("current_user",hum,temp,flame,touch,touch,touch,touch) #aquí habría que poner los capacitores
     print(sequence)
-    writeOnInflux(sequence)
+    writeOnInflux(sequence)'''
 
     '''
     UNA VEZ TENGAMOS PULIDO AL 100% LA ESTRUCTURA DE DATOS A UTILIZAR (creo que así es la correcta,
