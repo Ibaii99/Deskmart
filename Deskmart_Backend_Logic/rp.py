@@ -1,3 +1,6 @@
+import sys, os
+sys.path.append('../')
+sys.path.append(os.path.abspath(os.path.join('..', 'grove_lib')))
 from grove_lib import grove_flame_sensor
 from grove_lib import grove_infrarred_sensor #.Grove_Infrarred_Sensor
 from grove_lib import grove_rgb_lcd #.Grove_Rgb_Lcd
