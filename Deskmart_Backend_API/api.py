@@ -57,6 +57,7 @@ def getInfluxData():
         for record in table.records:
             results.append((record.get_value(), record.get_field()))
 
+    print(results)
     return results
 
 @app.route('/', methods=["GET"])
