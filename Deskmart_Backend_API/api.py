@@ -1,6 +1,5 @@
 from flask import Flask, Blueprint, abort, request, Response, jsonify
 from flask_cors import CORS, cross_origin
-from Deskmart_Backend_Logic import rp
 from datetime import datetime
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
@@ -8,7 +7,11 @@ import json
 from routing import api_users
 import config
 import logging
+import sys, os
 from logic.authorization import Authorization
+sys.path.append(os.path.abspath(os.path.join('..', 'Deskmart_Backend_Logic')))
+from Deskmart_Backend_Logic import rp
+
 
 app = Flask(__name__)
 #app.register_blueprint(api_markets.markets_blueprint, url_prefix=config.API_URL_PREFIX+"/market")
