@@ -4,13 +4,14 @@ from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
 from datetime import datetime
 import json
-from routing import api_users, api_sensors
+from routing import api_users, api_sensors, api_weather
 import config
 import logging
 from logic.authorization import Authorization
 
 
 app = Flask(__name__)
+app.register_blueprint(api_weather.weather_blueprint, url_prefix=config.API_URL_PREFIX+"/weather")
 app.register_blueprint(api_sensors.sensor_blueprint, url_prefix=config.API_URL_PREFIX+"/sensor")
 app.register_blueprint(api_users.users_blueprint, url_prefix=config.API_URL_PREFIX + "/user")
 
