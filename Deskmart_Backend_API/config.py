@@ -24,3 +24,5 @@ MONGO_AUTHENTICATE_DB = "udbank?retryWrites=true&w=majority"
 JWT_SIGN_KEY = "secret"
 #HASH
 SALT=b'\\a\xb9?\xa8P\xc6h\x85\xed)L\xa6\x99e\x0f\x86\xcf\xe8{2W\xc2\x17:\x1bR\xf8\x1b:\x88b'
+#OPENWEATHER
+OWM_APIKEY="cc79508fd2022eb4068c9f0dde04e3c7"
