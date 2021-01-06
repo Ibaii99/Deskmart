@@ -14,6 +14,6 @@ def echo():
 @cross_origin()
 def get_all_sensors():
     db = InfluxController()
-    return jsonify(db.get_capacitors_heatmap()), 200
+    return jsonify(db.get_heatmap_colors()), 200
 
 #ESTÁN TODOS LOS MÉTODOS BIEN EN INFLUXDB_CONTROLLER

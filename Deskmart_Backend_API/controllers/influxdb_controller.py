@@ -1,6 +1,8 @@
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
 import config
+import numpy as np
+
 
 
 class InfluxController:
@@ -67,10 +69,46 @@ class InfluxController:
             if "cap22" in x:
                 if x[2] == 1.0:
                     puntCap22 += 1
+
         puntuaciones = {
           "cap11": puntCap11,
           "cap12": puntCap12,
           "cap21": puntCap21,
           "cap22": puntCap22
         }
+
         return puntuaciones
+
+    def get_heatmap_colors(self):
+        capacitorsScore = self.get_capacitors_heatmap()
+        cap11 = capacitorsScore.get('cap11')
+        cap12 = capacitorsScore.get('cap12')
+        cap21 = capacitorsScore.get('cap21')
+        cap22 = capacitorsScore.get('cap22')
+        capacitors = [cap11, cap12, cap21, cap22]
+        maxValue = int(np.max(capacitors))
+        index = 0
+        for x in capacitors:
+            if maxValue != 0:
+                if x / maxValue > 0.75:
+                    capacitors[index] = "#FF0000"
+                if x / maxValue > 0.5 and x / maxValue < 0.75:
+                    capacitors[index] = "#FFA200"
+                if x / maxValue > 0.25 and x / maxValue < 0.5:
+                    capacitors[index] = "#FFDB00"
+                if x / maxValue < 0.25:
+                    capacitors[index] = "#2CAD00"
+            else:
+                capacitors = ["#2CAD00", "#2CAD00", "#2CAD00", "#2CAD00"]
+            index += 1
+
+
+
+
+        colors = {
+            "cap11": capacitors[0],
+            "cap12": capacitors[1],
+            "cap21": capacitors[2],
+            "cap22": capacitors[3],
+        }
+        return colors
