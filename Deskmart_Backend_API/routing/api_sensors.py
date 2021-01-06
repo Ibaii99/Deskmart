@@ -16,3 +16,4 @@ def get_all_sensors():
     db = InfluxController()
     return jsonify(db.get_influx_data()), 200
 
+#ESTÁN TODOS LOS MÉTODOS BIEN EN INFLUXDB_CONTROLLER

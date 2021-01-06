@@ -16,7 +16,7 @@ class InfluxController:
         results = []
         for table in result:
             for record in table.records:
-                results.append((record.get_time().strftime("%m/%d/%Y, %H:%M:%S"), record.get_field(), record.get_value()))
+                results.append((record.get_time().strftime("%d/%m/%Y, %H:%M:%S"), record.get_field(), record.get_value()))
 
         results_ordenados = sorted(results, key=lambda tup: tup[0])
 
@@ -28,5 +28,23 @@ class InfluxController:
 
     def get_last_timestamp(self):
         results = self.get_influx_data()
-        lastSensors = results.slice(Math.max(arr.length - 7, 1))
+        lastSensors = results[-7:]
         return lastSensors
+
+    def get_last_flame(self):
+        results = self.get_last_timestamp()
+        for x in results:
+            if "hayLlama" in x:
+                return x
+
+    def get_last_hum(self):
+        results = self.get_last_timestamp()
+        for x in results:
+            if "hayLlama" in x:
+                return x
+
+    def get_last_temp(self):
+        results = self.get_last_timestamp()
+        for x in results:
+            if "temperatura" in x:
+                return x
