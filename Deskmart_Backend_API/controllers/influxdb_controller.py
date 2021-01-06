@@ -11,7 +11,7 @@ class InfluxController:
         
     
     def get_influx_data(self):
-        query = 'from(bucket: "DeskMart") |> range(start: -12h, stop: now()) |> filter(fn: (r) => r["_measurement"] == "Capacitors" or r["_measurement"] == "humTemp" or r["_measurement"] == "llama")'
+        query = 'from(bucket: "DeskMart") |> range(start: -23h, stop: now()) |> filter(fn: (r) => r["_measurement"] == "Capacitors" or r["_measurement"] == "humTemp" or r["_measurement"] == "llama")'
         result = self.client.query_api().query(query, org=self.org)
         results = []
         for table in result:
@@ -24,7 +24,6 @@ class InfluxController:
             print(x)
 
         return results_ordenados
-
 
     def get_last_timestamp(self):
         results = self.get_influx_data()
@@ -48,3 +47,30 @@ class InfluxController:
         for x in results:
             if "temperatura" in x:
                 return x
+
+    def get_capacitors_heatmap(self):
+        results = self.get_influx_data()
+        puntCap11 = 0
+        puntCap12 = 0
+        puntCap21 = 0
+        puntCap22 = 0
+        for x in results:
+            if "cap11" in x:
+                if x[2] == 1.0:
+                    puntCap11 += 1
+            if "cap21" in x:
+                if x[2] == 1.0:
+                    puntCap21 += 1
+            if "cap12" in x:
+                if x[2] == 1.0:
+                    puntCap12 += 1
+            if "cap22" in x:
+                if x[2] == 1.0:
+                    puntCap22 += 1
+        puntuaciones = {
+          "cap11": puntCap11,
+          "cap12": puntCap12,
+          "cap21": puntCap21,
+          "cap22": puntCap22
+        }
+        return puntuaciones
