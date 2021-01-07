@@ -2338,7 +2338,7 @@ import { NotificationsService } from 'app/services/Notification/notifications.se
 import { interval, Subscription } from 'rxjs';
 
 
-const sensorInterval = interval(4000);
+const sensorInterval = interval(10000);
 const weatherInterval = interval(120000);
 
 
@@ -2386,17 +2386,21 @@ export class DashboardComponent implements OnDestroy {
       insideTemperature: new FormControl(''),
       insideHumidity: new FormControl(''),
       temperatureAlert: new FormControl(''),
+      color_capacitor11: new FormControl('#FFFFFF'),
+      color_capacitor12: new FormControl('#FFFFFF'),
+      color_capacitor21: new FormControl('#FFFFFF'),
+      color_capacitor22: new FormControl('#FFFFFF'),
 
     });
     this.loadWeather();
     this.loadsensors();
+    this.get_heat_map();
   }
 
 
   loadWeather(){
     this.backend.get_weather().then(
       (weather) => {
-        console.log(weather);
         this.formGroup.controls.weatherTemperature.setValue(weather.temperatura);
         this.formGroup.controls.weatherDescription.setValue(weather.tiempo);
         this.formGroup.controls.weatherHumidity.setValue(weather.humedad);
@@ -2413,7 +2417,6 @@ export class DashboardComponent implements OnDestroy {
   get_humidity(){
     this.backend.get_last_humidity().then(
       (humidity) => {
-        console.log(humidity[2]);
         this.formGroup.controls.insideHumidity.setValue(humidity[2]);
       }
     );
@@ -2422,7 +2425,6 @@ export class DashboardComponent implements OnDestroy {
   get_temperature(){
     this.backend.get_last_temperature().then(
       (temperature) => {
-        console.log(temperature[2]);
         this.formGroup.controls.insideTemperature.setValue(temperature[2]);
       }
     );
@@ -2431,7 +2433,6 @@ export class DashboardComponent implements OnDestroy {
   get_flame(){
     this.backend.get_last_flame().then(
       (alert) => {
-        console.log(alert[2]);
         this.formGroup.controls.temperatureAlert.setValue(alert[2]);
         if(alert[2]==1){
           this.noti.showNotification('top', 'center', "error", "Temperature alert", "Your temperature exceeds 38°C");
@@ -2440,6 +2441,19 @@ export class DashboardComponent implements OnDestroy {
     );
   }
 
+  get_heat_map(){
+    this.backend.get_heat_map().then(
+      (capacitors) => {
+        console.log(capacitors);
+        console.log("aaaaaaaaaa");
+        this.formGroup.controls.color_capacitor11.setValue(capacitors.cap11);
+        this.formGroup.controls.color_capacitor12.setValue(capacitors.cap12);
+        this.formGroup.controls.color_capacitor21.setValue(capacitors.cap21);
+        this.formGroup.controls.color_capacitor22.setValue(capacitors.cap22);
+
+      }
+    );
+  }
   ngOnDestroy() {
     this.sensorSubscription.unsubscribe();
     this.weatherSubscription.unsubscribe();

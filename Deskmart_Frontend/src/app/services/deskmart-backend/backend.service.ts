@@ -28,6 +28,11 @@ export class BackendService {
   get_last_flame(): Promise<any> {
     return this.http.get(`${endpoint}/sensor/last/flame`, {headers: this.headers}).toPromise();
   }
+
+  get_heat_map(): Promise<any> {
+    return this.http.get(`${endpoint}/sensor/heatmap/color`, {headers: this.headers}).toPromise();
+  }
+
   
   
 }

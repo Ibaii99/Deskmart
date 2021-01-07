@@ -31,9 +31,6 @@ export class LogoutComponent implements OnInit {
         }
       }
     );
-
-
-
   }
 
 
