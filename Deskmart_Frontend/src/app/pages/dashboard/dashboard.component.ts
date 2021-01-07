@@ -2431,8 +2431,8 @@ export class DashboardComponent{
       (alert) => {
         console.log(alert[2]);
         this.formGroup.controls.temperatureAlert.setValue(alert[2]);
-        if(alert[2]==0){
-          this.noti.showNotification('top', 'right', "alert", "Temperature alert", "Your temperature exceeds 38°C");
+        if(alert[2]==1){
+          this.noti.showNotification('top', 'center', "error", "Temperature alert", "Your temperature exceeds 38°C");
         }
       }
     );

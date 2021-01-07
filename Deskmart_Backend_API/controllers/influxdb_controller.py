@@ -22,9 +22,6 @@ class InfluxController:
 
         results_ordenados = sorted(results, key=lambda tup: tup[0])
 
-        for x in results_ordenados:
-            print(x)
-
         return results_ordenados
 
     def get_last_timestamp(self, username):
