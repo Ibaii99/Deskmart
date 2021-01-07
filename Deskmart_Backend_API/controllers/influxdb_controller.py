@@ -12,7 +12,7 @@ class InfluxController:
         self.client = InfluxDBClient(url="https://eu-central-1-1.aws.cloud2.influxdata.com", token=config.INFLUXDB_TOKEN)
         
     
-    def get_influx_data(self):
+    def get_influx_data(self, username):
         query = 'from(bucket: "DeskMart") |> range(start: -23h, stop: now()) |> filter(fn: (r) => r["_measurement"] == "Capacitors" or r["_measurement"] == "humTemp" or r["_measurement"] == "llama")'
         result = self.client.query_api().query(query, org=self.org)
         results = []
@@ -27,31 +27,31 @@ class InfluxController:
 
         return results_ordenados
 
-    def get_last_timestamp(self):
-        results = self.get_influx_data()
+    def get_last_timestamp(self, username):
+        results = self.get_influx_data(username)
         lastSensors = results[-7:]
         return lastSensors
 
-    def get_last_flame(self):
-        results = self.get_last_timestamp()
+    def get_last_flame(self, username):
+        results = self.get_last_timestamp(username)
         for x in results:
             if "hayLlama" in x:
                 return x
 
-    def get_last_hum(self):
-        results = self.get_last_timestamp()
+    def get_last_hum(self, username):
+        results = self.get_last_timestamp(username)
         for x in results:
-            if "hayLlama" in x:
+            if "humedad" in x:
                 return x
 
-    def get_last_temp(self):
-        results = self.get_last_timestamp()
+    def get_last_temp(self, username):
+        results = self.get_last_timestamp(username)
         for x in results:
             if "temperatura" in x:
                 return x
 
-    def get_capacitors_heatmap(self):
-        results = self.get_influx_data()
+    def get_capacitors_heatmap(self, username):
+        results = self.get_influx_data(username)
         puntCap11 = 0
         puntCap12 = 0
         puntCap21 = 0
@@ -79,8 +79,8 @@ class InfluxController:
 
         return puntuaciones
 
-    def get_heatmap_colors(self):
-        capacitorsScore = self.get_capacitors_heatmap()
+    def get_heatmap_colors(self, username):
+        capacitorsScore = self.get_capacitors_heatmap(username)
         cap11 = capacitorsScore.get('cap11')
         cap12 = capacitorsScore.get('cap12')
         cap21 = capacitorsScore.get('cap21')
