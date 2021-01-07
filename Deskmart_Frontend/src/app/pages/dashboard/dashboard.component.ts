@@ -2330,6 +2330,10 @@
 // }
 
 import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { BackendService } from 'app/services/deskmart-backend/backend.service';
+import { ToastrService } from 'ngx-toastr';
+import { NotificationsService } from 'app/services/Notification/notifications.service';
 
 
 interface Leyend{
@@ -2343,7 +2347,8 @@ interface Leyend{
   moduleId: module.id,
   templateUrl: "dashboard.component.html",
 })
-export class DashboardComponent {
+export class DashboardComponent{
+  
   public canvas: any;
   public ctx;
   public chartColor;
@@ -2359,5 +2364,78 @@ export class DashboardComponent {
   selectable: boolean = true;
   removable: boolean = true;
   addOnBlur: boolean = false;
+
+  color_capacitor11: string = "#FFFFFF";
+  color_capacitor12: string = "#FFFFFF";
+  color_capacitor21: string = "#FFFFFF";
+  color_capacitor22: string = "#FFFFFF";
+
+  formGroup: FormGroup;
+
+  noti: NotificationsService;
+
+  constructor(private fb: FormBuilder, private backend: BackendService, private toastr: ToastrService){
+    this.noti = new NotificationsService(this.toastr);
+
+    this.formGroup = fb.group({
+      weatherTemperature: new FormControl(''),
+      weatherDescription: new FormControl(''),
+      weatherHumidity: new FormControl(''),
+      insideTemperature: new FormControl(''),
+      insideHumidity: new FormControl(''),
+      temperatureAlert: new FormControl(''),
+
+    });
+    this.loadWeather();
+    this.loadsensors();
+
+  }
+
+  loadWeather(){
+    this.backend.get_weather().then(
+      (weather) => {
+        console.log(weather);
+        this.formGroup.controls.weatherTemperature.setValue(weather.temperatura);
+        this.formGroup.controls.weatherDescription.setValue(weather.tiempo);
+        this.formGroup.controls.weatherHumidity.setValue(weather.humedad);
+      }
+    );
+  }
+
+  loadsensors(){
+    this.get_humidity();
+    this.get_temperature();
+    this.get_flame();
+  }
+
+  get_humidity(){
+    this.backend.get_last_humidity().then(
+      (humidity) => {
+        console.log(humidity[2]);
+        this.formGroup.controls.insideHumidity.setValue(humidity[2]);
+      }
+    );
+  }
+
+  get_temperature(){
+    this.backend.get_last_temperature().then(
+      (temperature) => {
+        console.log(temperature[2]);
+        this.formGroup.controls.insideTemperature.setValue(temperature[2]);
+      }
+    );
+  }
+
+  get_flame(){
+    this.backend.get_last_flame().then(
+      (alert) => {
+        console.log(alert[2]);
+        this.formGroup.controls.temperatureAlert.setValue(alert[2]);
+        if(alert[2]==0){
+          this.noti.showNotification('top', 'right', "alert", "Temperature alert", "Your temperature exceeds 38°C");
+        }
+      }
+    );
+  }
 
 }

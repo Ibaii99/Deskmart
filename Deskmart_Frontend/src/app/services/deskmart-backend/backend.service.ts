@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-const endpoint = "http://localhost:3000/api/v1/";
+const endpoint = "http://localhost:3000/api/v1";
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,19 @@ export class BackendService {
   }
 
   get_weather(): Promise<any> {
-    return this.http.get(`${endpoint}weather/today`, {headers: this.headers}).toPromise();
+    return this.http.get(`${endpoint}/weather/today`, {headers: this.headers}).toPromise();
   }
 
+  get_last_humidity(): Promise<any> {
+    return this.http.get(`${endpoint}/sensor/last/humidity`, {headers: this.headers}).toPromise();
+  }
+  get_last_temperature(): Promise<any> {
+    return this.http.get(`${endpoint}/sensor/last/temperature`, {headers: this.headers}).toPromise();
+  }
+
+  get_last_flame(): Promise<any> {
+    return this.http.get(`${endpoint}/sensor/last/flame`, {headers: this.headers}).toPromise();
+  }
+  
   
 }

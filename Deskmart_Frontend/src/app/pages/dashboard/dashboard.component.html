@@ -6,14 +6,14 @@
       <div class="card-body ">
         <div class="row">
           <div class="col-5 col-md-4">
-            <div class="icon-big text-center icon-warning">
-              <i class="nc-icon nc-globe text-warning"></i>
+            <div class="icon-big text-center icon-danger">
+              <i class="nc-icon nc-ambulance text-danger"></i>
             </div>
           </div>
           <div class="col-7 col-md-8">
             <div class="numbers">
-              <p class="card-category">Capacity</p>
-              <p class="card-title">150GB
+              <p class="card-category">Temperature warning</p>
+              <p class="card-title"> <div *ngIf="!formGroup.controls.temperatureAlert.value"> OK </div> <div *ngIf="formGroup.controls.temperatureAlert.value"> ALERT </div>
                 <p>
             </div>
           </div>
@@ -22,7 +22,7 @@
       <div class="card-footer ">
         <hr>
         <div class="stats">
-          <i class="fa fa-refresh"></i> Update Now
+          <i class="fa fa-refresh"></i> Refresh
         </div>
       </div>
     </div>
@@ -34,22 +34,22 @@
         <div class="row">
           <div class="col-5 col-md-4">
             <div class="icon-big text-center icon-warning">
-              <i class="nc-icon nc-money-coins text-success"></i>
+              <span> <img src="http://openweathermap.org/img/wn/01d.png"> </span>
             </div>
           </div>
           <div class="col-7 col-md-8">
             <div class="numbers">
-              <p class="card-category">Revenue</p>
-              <p class="card-title">$ 1,345
-                <p>
+              <p class="card-category">Weather outside</p>
+              <p class="card-title">{{formGroup.controls.weatherDescription.value | titlecase}}</p>
             </div>
+            
           </div>
         </div>
       </div>
       <div class="card-footer ">
         <hr>
         <div class="stats">
-          <i class="fa fa-calendar-o"></i> Last day
+          <i class="fa fa-refresh"></i> Refresh
         </div>
       </div>
     </div>
@@ -61,7 +61,114 @@
         <div class="row">
           <div class="col-5 col-md-4">
             <div class="icon-big text-center icon-warning">
-              <i class="nc-icon nc-vector text-danger"></i>
+              <i class="nc-icon nc-sun-fog-29 text-warning"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category"> Temperature outside</p>
+              <p class="card-title"> <b>{{formGroup.controls.weatherTemperature.value}}</b> °C</p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-refresh"></i> Refresh
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-umbrella-13 text-primary"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">Humidity outside</p>
+              <p class="card-title"> <b>{{formGroup.controls.weatherHumidity.value}}</b> %</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-refresh"></i> Refresh
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-sun-fog-29"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category"> Temperature inside</p>
+              <p class="card-title"> <b>{{formGroup.controls.insideTemperature.value}}</b> °C</p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-refresh"></i> Refresh
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-umbrella-13"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">Humidity inside</p>
+              <p class="card-title"> <b>{{formGroup.controls.insideHumidity.value}}</b> %</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-refresh"></i> Refresh
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-touch-id text-danger"></i>
             </div>
           </div>
           <div class="col-7 col-md-8">
@@ -109,6 +216,35 @@
     </div>
   </div>
 </div>
+
+<div class="row">
+  <!-- Area Chart-->
+  <div class="col-md-12">
+    <div class="card ">
+      <div class="card-header ">
+        <h5 class="card-title">Deskmart</h5>
+      </div>
+      <div class="card-body ">
+        <p class="card-category">Table use</p>
+        <table style="width: 100%; height:100%;">
+          <tr height=100>
+            <td style="background-color:#ff0000;" id="capacitor11"> </td>
+            <td style="background-color:#ff0000;" id="capacitor12"> </td>
+          </tr>
+          <tr height=100>
+            <td style="background-color:#ff0000;" id="capacitor21"> </td>
+            <td style="background-color:#ff0000;" id="capacitor22"> </td>
+          </tr>
+        </table>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-check"></i> Data information certified
+        </div>
+      </div>
+    </div>
+  </div>
 
 <!--
 <div class="row">
