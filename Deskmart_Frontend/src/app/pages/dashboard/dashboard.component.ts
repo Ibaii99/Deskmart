@@ -2329,17 +2329,17 @@
 //   }
 // }
 
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BackendService } from 'app/services/deskmart-backend/backend.service';
 import { ToastrService } from 'ngx-toastr';
 import { NotificationsService } from 'app/services/Notification/notifications.service';
 
+import { interval, Subscription } from 'rxjs';
 
-interface Leyend{
-  name: string;
-  color: string;
-}
+
+const sensorInterval = interval(4000);
+const weatherInterval = interval(120000);
 
 
 @Component({
@@ -2347,18 +2347,20 @@ interface Leyend{
   moduleId: module.id,
   templateUrl: "dashboard.component.html",
 })
-export class DashboardComponent{
+export class DashboardComponent implements OnDestroy {
   
   public canvas: any;
   public ctx;
   public chartColor;
+  
+  sensorSubscription: Subscription = sensorInterval.subscribe(val => this.loadsensors());
+  weatherSubscription: Subscription = weatherInterval.subscribe(val => this.loadWeather());
+
 
   public areaChart;
   private pieChart;
   private linealChart;
   private lineChart;
-
-  public leyenda: Leyend[] = [];
 
   visible: boolean = true;
   selectable: boolean = true;
@@ -2388,8 +2390,8 @@ export class DashboardComponent{
     });
     this.loadWeather();
     this.loadsensors();
-
   }
+
 
   loadWeather(){
     this.backend.get_weather().then(
@@ -2438,4 +2440,8 @@ export class DashboardComponent{
     );
   }
 
+  ngOnDestroy() {
+    this.sensorSubscription.unsubscribe();
+    this.weatherSubscription.unsubscribe();
+  }
 }
