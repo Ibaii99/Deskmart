@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
-const endpoint = "https://udbank-backend.herokuapp.com/api/v1/user/";
+//const endpoint = "https://udbank-backend.herokuapp.com/api/v1/user/";
+const endpoint = "http://localhost:3000/api/v1/user/";
+
 @Injectable({
   providedIn: 'root'
 })
