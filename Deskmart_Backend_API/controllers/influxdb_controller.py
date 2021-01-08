@@ -13,7 +13,19 @@ class InfluxController:
         
     
     def get_influx_data(self, username):
-        query = 'from(bucket: "DeskMart") |> range(start: -23h, stop: now()) |> filter(fn: (r) => r["_measurement"] == "Capacitors" or r["_measurement"] == "humTemp" or r["_measurement"] == "llama") |> filter(fn: (r) => r["usuario"] == "' + username + '")'
+        query = 'from(bucket: "DeskMart") |> range(start: -3h, stop: now()) |> filter(fn: (r) => r["_measurement"] == "Capacitors" or r["_measurement"] == "humTemp" or r["_measurement"] == "llama") |> filter(fn: (r) => r["usuario"] == "' + username + '")'
+        result = self.client.query_api().query(query, org=self.org)
+        results = []
+        for table in result:
+            for record in table.records:
+                results.append((record.get_time().strftime("%d/%m/%Y, %H:%M:%S"), record.get_field(), record.get_value()))
+
+        results_ordenados = sorted(results, key=lambda tup: tup[0])
+
+        return results_ordenados
+
+    def get_user_history(self, username):
+        query = 'from(bucket: "DeskMart") |> range(start: -30d, stop: now()) |> filter(fn: (r) => r["_measurement"] == "Capacitors" or r["_measurement"] == "humTemp" or r["_measurement"] == "llama") |> filter(fn: (r) => r["usuario"] == "' + username + '")'
         result = self.client.query_api().query(query, org=self.org)
         results = []
         for table in result:
