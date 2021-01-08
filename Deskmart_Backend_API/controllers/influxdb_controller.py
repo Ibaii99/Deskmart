@@ -89,11 +89,13 @@ class InfluxController:
             if maxValue != 0:
                 if x / maxValue > 0.75 and x / maxValue <= 1:
                     capacitors[index] = "#FF0000"
-                if x / maxValue > 0.5 and x / maxValue < 0.75:
+                if x / maxValue > 0.5 and x / maxValue <= 0.75:
                     capacitors[index] = "#FFA200"
-                if x / maxValue > 0.25 and x / maxValue < 0.5:
+                if x / maxValue > 0.25 and x / maxValue <= 0.5:
                     capacitors[index] = "#FFDB00"
-                if x / maxValue < 0.25:
+                if x / maxValue < 0.25 and x != 0:
+                    capacitors[index] = "#a5cf00"
+                if x == 0:
                     capacitors[index] = "#2CAD00"
             else:
                 capacitors = ["#2CAD00", "#2CAD00", "#2CAD00", "#2CAD00"]
