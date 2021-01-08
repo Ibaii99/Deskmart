@@ -36,6 +36,31 @@ class InfluxController:
 
         return results_ordenados
 
+    def get_by_day(self, username, day, month, year):
+        query = 'from(bucket: "DeskMart") |> range(start: ' + year + '-' + month + '-' + day + 'T00:00:00Z, stop: ' + year + '-' + month + '-' + day + 'T23:59:59Z) |> filter(fn: (r) => r["_measurement"] == "Capacitors" or r["_measurement"] == "humTemp" or r["_measurement"] == "llama") |> filter(fn: (r) => r["usuario"] == "' + username + '")'
+        result = self.client.query_api().query(query, org=self.org)
+        results = []
+        for table in result:
+            for record in table.records:
+                results.append(
+                    (record.get_time().strftime("%d/%m/%Y, %H:%M:%S"), record.get_field(), record.get_value()))
+
+        results_ordenados = sorted(results, key=lambda tup: tup[0])
+
+        return results_ordenados
+
+    def get_by_range(self, username, dayFrom, monthFrom, yearFrom, dayTo, monthTo, yearTo):
+        query = 'from(bucket: "DeskMart") |> range(start: ' + yearFrom + '-' + monthFrom + '-' + dayFrom + 'T00:00:00Z, stop: ' + yearTo + '-' + monthTo + '-' + dayTo + 'T23:59:59Z) |> filter(fn: (r) => r["_measurement"] == "Capacitors" or r["_measurement"] == "humTemp" or r["_measurement"] == "llama") |> filter(fn: (r) => r["usuario"] == "' + username + '")'
+        result = self.client.query_api().query(query, org=self.org)
+        results = []
+        for table in result:
+            for record in table.records:
+                results.append((record.get_time().strftime("%d/%m/%Y, %H:%M:%S"), record.get_field(), record.get_value()))
+
+        results_ordenados = sorted(results, key=lambda tup: tup[0])
+
+        return results_ordenados
+
     def get_last_timestamp(self, username):
         results = self.get_influx_data(username)
         lastSensors = results[-7:]
@@ -144,10 +169,6 @@ class InfluxController:
             else:
                 capacitors = ["#2CAD00", "#2CAD00", "#2CAD00", "#2CAD00"]
             index += 1
-
-
-
-
         colors = {
             "cap11": capacitors[0],
             "cap12": capacitors[1],
@@ -156,3 +177,16 @@ class InfluxController:
             "maxValue": maxValue
         }
         return colors
+
+    def get_distinct_days(self, username):
+        query = 'from(bucket: "DeskMart") |> range(start: -30d, stop: now()) |> filter(fn: (r) => r["_measurement"] == "Capacitors" or r["_measurement"] == "humTemp" or r["_measurement"] == "llama") |> filter(fn: (r) => r["usuario"] == "' + username + '")'
+        result = self.client.query_api().query(query, org=self.org)
+        results = []
+        for table in result:
+            for record in table.records:
+                fecha = record.get_time().strftime("%d/%m/%Y")
+                if fecha not in results:
+                    results.append(fecha)
+        results_ordenados = sorted(results, key=lambda tup: tup[0])
+
+        return results_ordenados
