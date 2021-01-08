@@ -48,7 +48,6 @@ def check_api_key():
         
         return resp
     else:
-        logging.warning("BEFORE")
         # logging.warning(request.headers)
         api_key = request.headers.get("X-Api-Key")
         try:
@@ -70,7 +69,6 @@ def check_api_key():
 
 @app.after_request
 def save_history(response):
-    logging.warning("After")
 
     # logging.warning(response)
     # logging.warning(request)

@@ -2338,7 +2338,7 @@ import { NotificationsService } from 'app/services/Notification/notifications.se
 import { interval, Subscription } from 'rxjs';
 
 
-const sensorInterval = interval(10000);
+const sensorInterval = interval(40000);
 const weatherInterval = interval(120000);
 
 
@@ -2353,7 +2353,7 @@ export class DashboardComponent implements OnDestroy {
   public ctx;
   public chartColor;
   
-  sensorSubscription: Subscription = sensorInterval.subscribe(val => this.loadsensors());
+  sensorSubscription: Subscription = sensorInterval.subscribe(val => this.loadSensors());
   weatherSubscription: Subscription = weatherInterval.subscribe(val => this.loadWeather());
 
 
@@ -2391,12 +2391,18 @@ export class DashboardComponent implements OnDestroy {
       color_capacitor21: new FormControl('#FFFFFF'),
       color_capacitor22: new FormControl('#FFFFFF'),
 
+      time_capacitor11: new FormControl('0:0:0s'),
+      time_capacitor12: new FormControl('0:0:0s'),
+      time_capacitor21: new FormControl('0:0:0s'),
+      time_capacitor22: new FormControl('0:0:0s'),
+
+
+      capacitorTouches: new FormControl(0),
+
     });
     this.loadWeather();
-    this.loadsensors();
-    this.get_heat_map();
+    this.loadSensors();
   }
-
 
   loadWeather(){
     this.backend.get_weather().then(
@@ -2408,10 +2414,13 @@ export class DashboardComponent implements OnDestroy {
     );
   }
 
-  loadsensors(){
+  loadSensors(){
+    this.get_flame();
+    this.get_heat_map();
+    this.get_individual_touches();
+    this.get_total_touches();
     this.get_humidity();
     this.get_temperature();
-    this.get_flame();
   }
 
   get_humidity(){
@@ -2444,8 +2453,6 @@ export class DashboardComponent implements OnDestroy {
   get_heat_map(){
     this.backend.get_heat_map().then(
       (capacitors) => {
-        console.log(capacitors);
-        console.log("aaaaaaaaaa");
         this.formGroup.controls.color_capacitor11.setValue(capacitors.cap11);
         this.formGroup.controls.color_capacitor12.setValue(capacitors.cap12);
         this.formGroup.controls.color_capacitor21.setValue(capacitors.cap21);
@@ -2454,6 +2461,68 @@ export class DashboardComponent implements OnDestroy {
       }
     );
   }
+
+  get_total_touches(){
+    this.backend.get_touch_times().then(
+      (touches) => {
+        var seconds = touches * 3.54 ;
+        var hours = Math.floor(seconds / 3600);
+        var minutes = Math.floor(seconds / 60);
+        seconds = Math.round(seconds % 60);
+        var time = hours + ':' + minutes + ':' + seconds + 's';
+        this.formGroup.controls.capacitorTouches.setValue(time);
+      }
+    );
+  }
+
+  get_individual_touches(){
+
+    this.backend.get_touch_map().then(
+      (caps) => {
+
+        var seconds_cap11 = caps.cap11 * 3.54 ;
+        var hours_cap11 = Math.floor(seconds_cap11 / 3600);
+        var minutes_cap11 = Math.floor(seconds_cap11 / 60);
+        seconds_cap11 = Math.round(seconds_cap11 % 60);
+        var time_cap11 = hours_cap11 + ':' + minutes_cap11 + ':' + seconds_cap11 + 's';
+        
+
+        var seconds_cap12 = caps.cap12 * 3.54 ;
+        var hours_cap12 = Math.floor(seconds_cap12 / 3600);
+        var minutes_cap12 = Math.floor(seconds_cap12 / 60);
+        seconds_cap12 = Math.round(seconds_cap12 % 60);
+        var time_cap12 = hours_cap12 + ':' + minutes_cap12 + ':' + seconds_cap12 + 's';
+        
+        var seconds_cap21 = caps.cap21 * 3.54 ;
+        var hours_cap21 = Math.floor(seconds_cap21 / 3600);
+        var minutes_cap21 = Math.floor(seconds_cap21 / 60);
+        seconds_cap21 = Math.round(seconds_cap21 % 60);
+        var time_cap21 = hours_cap21 + ':' + minutes_cap21 + ':' + seconds_cap21 + 's';
+        
+        var seconds_cap22 = caps.cap22 * 3.54 ;
+        var hours_cap22 = Math.floor(seconds_cap22 / 3600);
+        var minutes_cap22 = Math.floor(seconds_cap22 / 60);
+        seconds_cap22 = Math.round(seconds_cap22 % 60);
+        var time_cap22 = hours_cap22 + ':' + minutes_cap22 + ':' + seconds_cap22 + 's';
+        
+        this.formGroup.controls.time_capacitor11.setValue(time_cap11);
+        this.formGroup.controls.time_capacitor12.setValue(time_cap12);
+        this.formGroup.controls.time_capacitor21.setValue(time_cap21);
+        this.formGroup.controls.time_capacitor22.setValue(time_cap22);
+        
+
+        // var seconds = touches * 3.54 ;
+        // var hours = Math.floor(seconds / 3600);
+        // var minutes = Math.floor(seconds / 60);
+        // seconds = Math.round(seconds % 60);
+        // var time = hours + ':' + minutes + ':' + seconds + 's';
+        // this.formGroup.controls.capacitorTouches.setValue(time);
+      }
+    );
+    
+  }
+
+
   ngOnDestroy() {
     this.sensorSubscription.unsubscribe();
     this.weatherSubscription.unsubscribe();

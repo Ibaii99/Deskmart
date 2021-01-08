@@ -33,6 +33,15 @@ export class BackendService {
     return this.http.get(`${endpoint}/sensor/heatmap/color`, {headers: this.headers}).toPromise();
   }
 
+  get_touch_map(): Promise<any> {
+    return this.http.get(`${endpoint}/sensor/heatmap/value`, {headers: this.headers}).toPromise();
+  }
+
+  get_touch_times(): Promise<any> {
+    return this.http.get(`${endpoint}/sensor/heatmap/touches`, {headers: this.headers}).toPromise();
+  }
+
+  
   
   
 }

@@ -51,7 +51,10 @@ def get_heatmap_color():
     return jsonify(db.get_heatmap_colors(get_user_name(request))), 200
 
 
-
+@sensor_blueprint.route("/heatmap/touches", methods=["GET"])
+@cross_origin()
+def get_heatmap_touches():
+    return jsonify(db.get_capacitors_touch_time(get_user_name(request))), 200
 
 users_db = UsersController()
 sessions_db = SessionsController()
@@ -65,4 +68,5 @@ def get_user_name(request):
             if user:
                 if user.email:
                     return user.email
+                    
     abort(401)

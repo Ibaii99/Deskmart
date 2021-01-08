@@ -75,7 +75,39 @@ class InfluxController:
         }
 
         return puntuaciones
+    
+    def get_capacitors_touch_time(self, username):
+        results = self.get_influx_data(username)
+        times = 0
+        previusTimestamp = None
+        to_add = True
+        for x in results:
+            if previusTimestamp is None or previusTimestamp!= x[0]:
+                previusTimestamp= x[0]
+                to_add = True
+                
+            if "cap11" in x and to_add:
+                if x[2] == 1.0:
+                    times += 1
+                    to_add = False
+            
+            if "cap12" in x and to_add:
+                if x[2] == 1.0:
+                    times += 1
+                    to_add = False
+            
+            if "cap21" in x and to_add:
+                if x[2] == 1.0:
+                    times += 1
+                    to_add = False
+            
+            if "cap22" in x and to_add:
+                if x[2] == 1.0:
+                    times += 1
+                    to_add = False
 
+        return times
+    
     def get_heatmap_colors(self, username):
         capacitorsScore = self.get_capacitors_heatmap(username)
         cap11 = capacitorsScore.get('cap11')
