@@ -87,13 +87,13 @@ class InfluxController:
         index = 0
         for x in capacitors:
             if maxValue != 0:
-                if x / maxValue > 0.75 and x / maxValue < 1:
+                if x / maxValue > 0.75 and x / maxValue <= 1:
                     capacitors[index] = "#FF0000"
                 if x / maxValue > 0.5 and x / maxValue < 0.75:
                     capacitors[index] = "#FFA200"
                 if x / maxValue > 0.25 and x / maxValue < 0.5:
                     capacitors[index] = "#FFDB00"
-                else:
+                if x / maxValue < 0.25:
                     capacitors[index] = "#2CAD00"
             else:
                 capacitors = ["#2CAD00", "#2CAD00", "#2CAD00", "#2CAD00"]
@@ -107,5 +107,6 @@ class InfluxController:
             "cap12": capacitors[1],
             "cap21": capacitors[2],
             "cap22": capacitors[3],
+            "maxValue": maxValue
         }
         return colors
