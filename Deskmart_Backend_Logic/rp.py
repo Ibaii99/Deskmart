@@ -41,15 +41,15 @@ class Runtime:
 
     def record(self):
 
-        self.hum_value = temp_hum.read()[0]
-        self.temp_value = temp_hum.read()[1]
+        self.hum_value = self.temp_hum.read()[0]
+        self.temp_value = self.temp_hum.read()[1]
         
-        self.flame_value = flame.read()
+        self.flame_value = self.flame.read()
         
-        self.touch11_value = touch11.read()
-        self.touch12_value = touch12.read()
-        self.touch21_value = touch21.read()
-        self.touch22_value = touch22.read()
+        self.touch11_value = self.touch11.read()
+        self.touch12_value = self.touch12.read()
+        self.touch21_value = self.touch21.read()
+        self.touch22_value = self.touch22.read()
 
         values = [self.hum_value, self.temp_value, self.flame_value, self.touch11_value, self.touch12_value, self.touch21_value, self.touch22_value]
 
@@ -77,7 +77,7 @@ class Runtime:
             time.sleep(4)
             
             self.lcd.setRGB(50,125,50)
-            self.lcd.setText("Temperature inside:\n{}°C".format(self.temp_value))
+            self.lcd.setText("Temp. inside:\n{}°C".format(self.temp_value))
             time.sleep(4)
             
             self.lcd.setRGB(50,125,50)
@@ -85,7 +85,7 @@ class Runtime:
             time.sleep(4)
             
             self.lcd.setRGB(75,50,50)
-            text: "SAFE"
+            text= "SAFE"
             if self.flame_value:
                 text= "ALERT"
                 
