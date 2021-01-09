@@ -57,7 +57,7 @@ class Runtime:
         
     def work(self):
         while True:
-            record()
+            self.record()
             time.sleep(1)
         
     def terminal(self):
