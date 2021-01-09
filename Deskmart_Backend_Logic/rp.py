@@ -85,10 +85,10 @@ class Runtime:
             time.sleep(4)
             
             self.lcd.setRGB(75,50,50)
+            text: "SAFE"
             if self.flame_value:
                 text= "ALERT"
-            else:
-                text: "SAFE"
+                
             self.lcd.setText("User temperature:\n{}".format(text))
             time.sleep(4)
             
