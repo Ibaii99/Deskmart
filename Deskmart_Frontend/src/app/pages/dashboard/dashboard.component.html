@@ -183,7 +183,7 @@
       <div class="card-footer ">
         <hr>
         <div class="stats">
-          <i class="fa fa-clock-o"></i> In the last 24hours
+          <i class="fa fa-clock-o"></i> The {{dd}}/{{mm}}//{{yyyy}}
         </div>
       </div>
     </div>
@@ -195,13 +195,14 @@
         <div class="row">
           <div class="col-5 col-md-4">
             <div class="icon-big text-center icon-warning">
-              <i class="nc-icon nc-favourite-28 text-primary"></i>
+              <a (click)="reload()"><i class="fa fa-refresh text-primary"></i></a>
             </div>
           </div>
           <div class="col-7 col-md-8">
             <div class="numbers">
-              <p class="card-category">Followers</p>
-              <p class="card-title">+45K
+              <p class="card-category">Refresh data</p>
+              <p class="card-title">
+              
                 <p>
             </div>
           </div>
@@ -210,7 +211,7 @@
       <div class="card-footer ">
         <hr>
         <div class="stats">
-          <i class="fa fa-refresh"></i> Update now
+          <i class="fa fa-refresh"></i> Last update at {{now}}
         </div>
       </div>
     </div>
@@ -225,7 +226,18 @@
         <h5 class="card-title">Deskmart</h5>
       </div>
       <div class="card-body ">
-        <p class="card-category">Table touch heatmap</p>
+        <p class="card-category">Table touch heatmap</p>  
+         <form [formGroup]="formGroup" (ngSubmit) = "selectDate(date)" novalidate>
+              <mat-form-field appearance="fill">
+                <mat-label>Date</mat-label>
+                <mat-select formControlName="dateSelected" placeholder="{{formGroup.controls.dateSelected.value}}" style="color: black; -webkit-input-placeholder: black;">
+                  <mat-option *ngFor="let date of dates" value="date" (onSelectionChange)="selectDate(date)">
+                    {{date}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </form>
+
         <table style="width: 100%; height:100%; text-align:center;">
           <tr height=100>
             <td style="background-color:{{formGroup.controls.color_capacitor11.value}};" id="capacitor11"> <b>{{formGroup.controls.time_capacitor11.value}}</b> </td>

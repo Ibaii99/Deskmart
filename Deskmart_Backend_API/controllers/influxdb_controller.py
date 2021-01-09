@@ -190,5 +190,5 @@ class InfluxController:
             fecha = arrFecha[0]
             if fecha not in distinct_dates:
                 distinct_dates.append(fecha)
-
+        logging.warning(distinct_dates)
         return distinct_dates
