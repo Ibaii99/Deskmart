@@ -29,19 +29,36 @@ export class BackendService {
     return this.http.get(`${endpoint}/sensor/last/flame`, {headers: this.headers}).toPromise();
   }
 
-  get_heat_map(): Promise<any> {
+  get_different_days(): Promise<any> {
+    return this.http.get(`${endpoint}/sensor/distinct`, {headers: this.headers}).toPromise();
+  }
+
+
+  get_heat_map(day, month, year): Promise<any> {
+    this.headers = this.headers.set('day', day);
+    this.headers = this.headers.set('month', month);
+    this.headers = this.headers.set('year', year);
+    console.log(this.headers);
     return this.http.get(`${endpoint}/sensor/heatmap/color`, {headers: this.headers}).toPromise();
   }
 
-  get_touch_map(): Promise<any> {
+  get_touch_map(day, month, year): Promise<any> {
+    this.headers = this.headers.set('day', day);
+    this.headers = this.headers.set('month', month);
+    this.headers = this.headers.set('year', year);
+    console.log(this.headers);
     return this.http.get(`${endpoint}/sensor/heatmap/value`, {headers: this.headers}).toPromise();
   }
 
-  get_touch_times(): Promise<any> {
+  get_touch_times(day, month, year): Promise<any> {
+    this.headers = this.headers.set('day', day);
+    this.headers = this.headers.set('month', month);
+    this.headers = this.headers.set('year', year);
+    console.log(this.headers);
     return this.http.get(`${endpoint}/sensor/heatmap/touches`, {headers: this.headers}).toPromise();
   }
 
-  
-  
-  
+
+
+ 
 }

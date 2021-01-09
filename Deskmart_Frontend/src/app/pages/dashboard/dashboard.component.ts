@@ -2357,10 +2357,17 @@ export class DashboardComponent implements OnDestroy {
   weatherSubscription: Subscription = weatherInterval.subscribe(val => this.loadWeather());
 
 
+  private today = new Date();
+  private dd = String(this.today.getDate()).padStart(2, '0');
+  private mm = String(this.today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  private yyyy = String(this.today.getFullYear());
+
   public areaChart;
   private pieChart;
   private linealChart;
   private lineChart;
+
+
 
   visible: boolean = true;
   selectable: boolean = true;
@@ -2400,9 +2407,11 @@ export class DashboardComponent implements OnDestroy {
       capacitorTouches: new FormControl(0),
 
     });
+    this.get_different_days();
     this.loadWeather();
     this.loadSensors();
   }
+
 
   loadWeather(){
     this.backend.get_weather().then(
@@ -2451,7 +2460,7 @@ export class DashboardComponent implements OnDestroy {
   }
 
   get_heat_map(){
-    this.backend.get_heat_map().then(
+    this.backend.get_heat_map(this.dd, this.mm, this.yyyy).then(
       (capacitors) => {
         this.formGroup.controls.color_capacitor11.setValue(capacitors.cap11);
         this.formGroup.controls.color_capacitor12.setValue(capacitors.cap12);
@@ -2462,8 +2471,15 @@ export class DashboardComponent implements OnDestroy {
     );
   }
 
+  get_different_days(){
+    this.backend.get_touch_times(this.dd, this.mm, this.yyyy).then(
+      (days) => {
+        console.log(days);
+
+      });
+  }
   get_total_touches(){
-    this.backend.get_touch_times().then(
+    this.backend.get_touch_times(this.dd, this.mm, this.yyyy).then(
       (touches) => {
         var seconds = touches * 3.54 ;
         var hours = Math.floor(seconds / 3600);
@@ -2477,7 +2493,7 @@ export class DashboardComponent implements OnDestroy {
 
   get_individual_touches(){
 
-    this.backend.get_touch_map().then(
+    this.backend.get_touch_map(this.dd, this.mm, this.yyyy).then(
       (caps) => {
 
         var seconds_cap11 = caps.cap11 * 3.54 ;

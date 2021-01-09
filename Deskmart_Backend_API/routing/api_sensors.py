@@ -2,6 +2,7 @@ from flask import Blueprint, Response, request, abort, jsonify
 from flask_cors import cross_origin
 
 from utils import COOKIE_MANAGER
+import logging
 
 from controllers.influxdb_controller import InfluxController
 from controllers.users_controller import UsersController
@@ -19,6 +20,11 @@ def echo():
 @cross_origin()
 def get_all_sensors():
     return jsonify(db.get_influx_data(get_user_name(request))), 200
+
+@sensor_blueprint.route("/distinct", methods=["GET"])
+@cross_origin()
+def get_distinct_dates():
+    return jsonify(db.get_distinct_days(get_user_name(request))), 200
 
 @sensor_blueprint.route("/last", methods=["GET"])
 @cross_origin()
@@ -43,18 +49,27 @@ def get_last_temperature():
 @sensor_blueprint.route("/heatmap/value", methods=["GET"])
 @cross_origin()
 def get_heatmap_value():
-    return jsonify(db.get_capacitors_heatmap(get_user_name(request))), 200
+    year = request.headers.get('year')
+    month = request.headers.get('month')
+    day = request.headers.get('day')
+    return jsonify(db.get_capacitors_heatmap(get_user_name(request), day, month, year)), 200
 
 @sensor_blueprint.route("/heatmap/color", methods=["GET"])
 @cross_origin()
 def get_heatmap_color():
-    return jsonify(db.get_heatmap_colors(get_user_name(request))), 200
+    year = request.headers.get('year')
+    month = request.headers.get('month')
+    day = request.headers.get('day')
+    return jsonify(db.get_heatmap_colors(get_user_name(request), day, month, year)), 200
 
 
 @sensor_blueprint.route("/heatmap/touches", methods=["GET"])
 @cross_origin()
 def get_heatmap_touches():
-    return jsonify(db.get_capacitors_touch_time(get_user_name(request))), 200
+    year = request.headers.get('year')
+    month = request.headers.get('month')
+    day = request.headers.get('day')
+    return jsonify(db.get_capacitors_touch_time(get_user_name(request), day, month, year)), 200
 
 users_db = UsersController()
 sessions_db = SessionsController()

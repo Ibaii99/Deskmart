@@ -1,6 +1,6 @@
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
-import config
+import config, logging
 import numpy as np
 
 
@@ -44,9 +44,8 @@ class InfluxController:
             for record in table.records:
                 results.append(
                     (record.get_time().strftime("%d/%m/%Y, %H:%M:%S"), record.get_field(), record.get_value()))
-
+        
         results_ordenados = sorted(results, key=lambda tup: tup[0])
-
         return results_ordenados
 
     def get_by_range(self, username, dayFrom, monthFrom, yearFrom, dayTo, monthTo, yearTo):
@@ -61,11 +60,16 @@ class InfluxController:
 
         return results_ordenados
 
-    def get_last_timestamp(self, username):
-        results = self.get_influx_data(username)
+    def get_last_timestamp_by_day(self, username, day, month, year):
+        results = self.get_by_day(username, day, month, year)
         lastSensors = results[-7:]
         return lastSensors
 
+    def get_last_timestamp(self, username):
+        results = self.get_user_history(username)
+        lastSensors = results[-7:]
+        return lastSensors
+    
     def get_last_flame(self, username):
         results = self.get_last_timestamp(username)
         for x in results:
@@ -84,8 +88,8 @@ class InfluxController:
             if "temperatura" in x:
                 return x
 
-    def get_capacitors_heatmap(self, username):
-        results = self.get_influx_data(username)
+    def get_capacitors_heatmap(self, username, day, month, year):
+        results = self.get_by_day(username, day, month, year)
         puntCap11 = 0
         puntCap12 = 0
         puntCap21 = 0
@@ -113,8 +117,8 @@ class InfluxController:
 
         return puntuaciones
     
-    def get_capacitors_touch_time(self, username):
-        results = self.get_influx_data(username)
+    def get_capacitors_touch_time(self, username, day, month, year):
+        results = self.get_by_day(username, day, month, year)
         times = 0
         previusTimestamp = None
         to_add = True
@@ -145,8 +149,8 @@ class InfluxController:
 
         return times
     
-    def get_heatmap_colors(self, username):
-        capacitorsScore = self.get_capacitors_heatmap(username)
+    def get_heatmap_colors(self, username, day, month, year):
+        capacitorsScore = self.get_capacitors_heatmap(username, day, month, year)
         cap11 = capacitorsScore.get('cap11')
         cap12 = capacitorsScore.get('cap12')
         cap21 = capacitorsScore.get('cap21')
