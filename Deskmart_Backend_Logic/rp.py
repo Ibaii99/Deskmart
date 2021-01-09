@@ -22,6 +22,8 @@ def init():
     touch12 = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR_1x2)
     touch21 = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR_2x1)
     touch22 = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR_2x2)
+    
+    lcd = grove_rgb_lcd.Grove_Rgb_Lcd()
     #print("Initializing finished")
 
     '''
@@ -32,10 +34,10 @@ def init():
     print("Flame sensor {}".format(flame.read()))
     '''
 
-    return temp_hum, flame, touch11, touch12, touch21, touch22 
+    return temp_hum, flame, touch11, touch12, touch21, touch22, lcd 
 
 def record():
-    temp_hum, flame, touch11, touch12, touch21, touch22 = init()
+    temp_hum, flame, touch11, touch12, touch21, touch22, lcd = init()
 
     hum_value = temp_hum.read()[0]
     temp_value = temp_hum.read()[1]
@@ -47,6 +49,7 @@ def record():
     touch21_value = touch21.read()
     touch22_value = touch22.read()
 
+    lcd.setText("Hola")
     values = [hum_value, temp_value, flame_value, touch11_value, touch12_value, touch21_value, touch22_value]
 
     db = database_manager.InfluxController()
