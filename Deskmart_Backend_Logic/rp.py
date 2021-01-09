@@ -58,11 +58,17 @@ def terminal():
     lcd = grove_rgb_lcd.Grove_Rgb_Lcd()
     
     while True:
+        lcd.setRGB(255,0,255)
         lcd.setText("Username:\n{}".format(config.USERNAME))
+        
         time.sleep(2)
         now = datetime.datetime.now()
+        lcd.setRGB(125,0,0)
+
         lcd.setText("Date:\n{}/{}/{}".format(now.day, now.month, now.year))        
         time.sleep(2)
+        lcd.setRGB(0,0,125)
+
         lcd.setText("Hour:\n{}:{}".format(now.hour, now.minute))
         time.sleep(2)
         
