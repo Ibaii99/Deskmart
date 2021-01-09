@@ -184,13 +184,16 @@ class InfluxController:
 
     def get_distinct_days(self, username):
         query = 'from(bucket: "DeskMart") |> range(start: -30d, stop: now()) |> filter(fn: (r) => r["_measurement"] == "Capacitors" or r["_measurement"] == "humTemp" or r["_measurement"] == "llama") |> filter(fn: (r) => r["usuario"] == "' + username + '")'
+        logging.warning("aaaaaaaa")
         result = self.client.query_api().query(query, org=self.org)
+        logging.warning(result)
         results = []
         for table in result:
             for record in table.records:
                 fecha = record.get_time().strftime("%d/%m/%Y")
                 if fecha not in results:
                     results.append(fecha)
+        logging.warning(results)
         results_ordenados = sorted(results, key=lambda tup: tup[0])
-
+        logging.warning(results_ordenados)
         return results_ordenados
