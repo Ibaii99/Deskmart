@@ -73,7 +73,7 @@ class Runtime:
             time.sleep(4)
             
             self.lcd.setRGB(0,0,125)
-            self.lcd.setText("Hour:\n{}:{}".format(now.hour, now.minute))
+            self.lcd.setText("Hour:\n{}:{}".format(now.hour+1, now.minute))
             time.sleep(4)
             
             self.lcd.setRGB(50,125,50)
