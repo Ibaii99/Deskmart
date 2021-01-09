@@ -183,7 +183,7 @@ class InfluxController:
         return colors
 
     def get_distinct_days(self, username):
-        result = self.get_influx_data(username)
+        result = self.get_user_history(username)
         results = []
         for table in result:
             for record in table.records:
