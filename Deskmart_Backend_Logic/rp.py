@@ -89,7 +89,7 @@ class Runtime:
             if self.flame_value:
                 text= "ALERT"
                 
-            self.lcd.setText("User temperature:\n{}".format(text))
+            self.lcd.setText("User temp.:\n{}".format(text))
             time.sleep(4)
             
             
