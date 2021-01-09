@@ -32,10 +32,10 @@ class Grove_Rgb_Lcd:
     
     # set display text \n for second line(or auto wrap)
     def setText(self, text):
-        textCommand(0x01) # clear display
+        self.textCommand(0x01) # clear display
         time.sleep(.05)
-        textCommand(0x08 | 0x04) # display on, no cursor
-        textCommand(0x28) # 2 lines
+        self.textCommand(0x08 | 0x04) # display on, no cursor
+        self.textCommand(0x28) # 2 lines
         time.sleep(.05)
         count = 0
         row = 0
@@ -45,7 +45,7 @@ class Grove_Rgb_Lcd:
                 row += 1
                 if row == 2:
                     break
-                textCommand(0xc0)
+                self.textCommand(0xc0)
                 if c == '\n':
                     continue
             count += 1
@@ -53,10 +53,10 @@ class Grove_Rgb_Lcd:
     
     #Update the display without erasing the display
     def setText_norefresh(self, text):
-        textCommand(0x02) # return home
+        self.textCommand(0x02) # return home
         time.sleep(.05)
-        textCommand(0x08 | 0x04) # display on, no cursor
-        textCommand(0x28) # 2 lines
+        self.textCommand(0x08 | 0x04) # display on, no cursor
+        self.textCommand(0x28) # 2 lines
         time.sleep(.05)
         count = 0
         row = 0
@@ -68,7 +68,7 @@ class Grove_Rgb_Lcd:
                 row += 1
                 if row == 2:
                     break
-                textCommand(0xc0)
+                self.textCommand(0xc0)
                 if c == '\n':
                     continue
             count += 1
