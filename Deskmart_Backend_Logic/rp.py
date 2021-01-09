@@ -8,6 +8,7 @@ from grove_lib import grove_touch_sensor
 
 import config
 import database_manager
+import threading
 
 import time
 
@@ -55,7 +56,11 @@ def record():
     db = database_manager.InfluxController()
     db.save(config.USERNAME, values)
     
-if __name__ == '__main__':
+def work():
     while True:
         record()
         time.sleep(1)
+if __name__ == '__main__':
+    
+    hilo1 = threading.Thread(target=work)
+    hilo1.start()
