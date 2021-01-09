@@ -183,8 +183,7 @@ class InfluxController:
         return colors
 
     def get_distinct_days(self, username):
-        query = 'from(bucket: "DeskMart") |> range(start: -30d, stop: now()) |> filter(fn: (r) => r["_measurement"] == "Capacitors" or r["_measurement"] == "humTemp" or r["_measurement"] == "llama") |> filter(fn: (r) => r["usuario"] == "' + username + '")'
-        result = self.client.query_api().query(query, org=self.org)
+        result = self.get_influx_data(username)
         results = []
         for table in result:
             for record in table.records:
