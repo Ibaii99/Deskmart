@@ -25,9 +25,18 @@ class Runtime:
         self.touch21 = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR_2x1)
         self.touch22 = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR_2x2)
         
+        self.hum_value = 0
+        self.temp_value = 0
+        
+        self.flame_value = 0
+        
+        self.touch11_value = 0
+        self.touch12_value = 0
+        self.touch21_value = 0
+        self.touch22_value = 0
+        
         self.lcd = grove_rgb_lcd.Grove_Rgb_Lcd()
 
-        
         self.db = database_manager.InfluxController()
 
     def record(self):
