@@ -12,6 +12,8 @@ import threading
 
 import time
 
+import datetime
+
 
 def init():
     #print("Initializing")
@@ -24,21 +26,12 @@ def init():
     touch21 = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR_2x1)
     touch22 = grove_touch_sensor.GroveTouchSensor(config.TOUCH_SENSOR_2x2)
     
-    lcd = grove_rgb_lcd.Grove_Rgb_Lcd()
     #print("Initializing finished")
 
-    '''
-    print("Going to read")
-    
-    print("Touch sensor {}".format(touch.read()))
-    print("Temp_Hum sensor {}".format(temp_hum.read()))
-    print("Flame sensor {}".format(flame.read()))
-    '''
-
-    return temp_hum, flame, touch11, touch12, touch21, touch22, lcd 
+    return temp_hum, flame, touch11, touch12, touch21, touch22
 
 def record():
-    temp_hum, flame, touch11, touch12, touch21, touch22, lcd = init()
+    temp_hum, flame, touch11, touch12, touch21, touch22 = init()
 
     hum_value = temp_hum.read()[0]
     temp_value = temp_hum.read()[1]
@@ -50,7 +43,6 @@ def record():
     touch21_value = touch21.read()
     touch22_value = touch22.read()
 
-    lcd.setText("Hola")
     values = [hum_value, temp_value, flame_value, touch11_value, touch12_value, touch21_value, touch22_value]
 
     db = database_manager.InfluxController()
@@ -60,7 +52,24 @@ def work():
     while True:
         record()
         time.sleep(1)
+        
+def terminal():
+    
+    lcd = grove_rgb_lcd.Grove_Rgb_Lcd()
+    
+    while True:
+        lcd.setText("Username:\n{}".format(config.USERNAME))
+        time.sleep(2)
+        now = datetime.datetime.now()
+        lcd.setText("Date:\n{}/{}/{}".format(now.day, now.month, now.year))        
+        time.sleep(2)
+        lcd.setText("Hour:\n{}:{}".format(now.hour, now.minute))
+        time.sleep(2)
+        
+        
 if __name__ == '__main__':
     
     hilo1 = threading.Thread(target=work)
+    hilo2 = threading.Thread(target=terminal)
     hilo1.start()
+    hilo2.start()
