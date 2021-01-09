@@ -13,6 +13,7 @@ import threading
 import time
 
 import datetime
+import pytz
 
 class Runtime:
     def __init__(self):
@@ -67,13 +68,13 @@ class Runtime:
             self.lcd.setText("Username:\n{}".format(config.USERNAME))
             
             time.sleep(4)
-            now = datetime.datetime.now()
+            now = datetime.datetime.now(pytz.timezone('Europe/Madrid'))
             self.lcd.setRGB(0,0,125)
             self.lcd.setText("Date:\n{}/{}/{}".format(now.day, now.month, now.year))        
             time.sleep(4)
             
             self.lcd.setRGB(0,0,125)
-            self.lcd.setText("Hour:\n{}:{}".format(now.hour+1, now.minute))
+            self.lcd.setText("Hour:\n{}:{}".format(now.hour, now.minute))
             time.sleep(4)
             
             self.lcd.setRGB(50,125,50)
