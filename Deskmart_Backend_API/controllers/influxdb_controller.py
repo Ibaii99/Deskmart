@@ -183,13 +183,12 @@ class InfluxController:
         return colors
 
     def get_distinct_days(self, username):
-        result = self.get_user_history(username)
-        results = []
-        for table in result:
-            for record in table.records:
-                fecha = record.get_time().strftime("%d/%m/%Y")
-                if fecha not in results:
-                    results.append(fecha)
-        results_ordenados = sorted(results, key=lambda tup: tup[0])
+        results = self.get_user_history(username)
+        distinct_dates = []
+        for x in results:
+            arrFecha = x[0].split(",")
+            fecha = arrFecha[0]
+            if fecha not in distinct_dates:
+                distinct_dates.append(fecha)
 
-        return results_ordenados
+        return distinct_dates
