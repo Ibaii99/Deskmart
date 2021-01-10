@@ -230,6 +230,7 @@ export class DashboardComponent implements OnDestroy {
     this.dd = date.split("/")[0];
     this.mm = date.split("/")[1];
     this.yyyy = date.split("/")[2];
+    this.formGroup.controls['dateSelected'].setValue(this.dd+'/'+this.mm+'/'+this.yyyy);
     this.loadCapacitors();
   }
 }

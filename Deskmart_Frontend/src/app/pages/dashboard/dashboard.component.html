@@ -231,7 +231,7 @@
               <mat-form-field appearance="fill">
                 <mat-label>Date</mat-label>
                 <mat-select formControlName="dateSelected" placeholder="{{formGroup.controls.dateSelected.value}}" style="color: black; -webkit-input-placeholder: black;">
-                  <mat-option *ngFor="let date of dates" value="date" (onSelectionChange)="selectDate(date)">
+                  <mat-option *ngFor="let date of dates" value="{{date}}" (onSelectionChange)="selectDate(date)">
                     {{date}}
                   </mat-option>
                 </mat-select>
